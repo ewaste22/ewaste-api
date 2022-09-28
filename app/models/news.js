@@ -16,10 +16,45 @@ module.exports = (sequelize, DataTypes) => {
   }
   News.init(
     {
-      title_news: DataTypes.STRING,
-      image_news: DataTypes.TEXT,
-      body_news: DataTypes.TEXT,
-      admin_id: DataTypes.NUMBER,
+      title_news: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: "Title cannot be empty",
+          },
+        },
+      },
+      image_news: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: "Image cannot be empty",
+          },
+        },
+      },
+      body_news: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: "Body cannot be empty",
+          },
+        },
+      },
+      admin_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: "Admin Id cannot be empty",
+          },
+          isNumeric: {
+            msg: "Admin Id must be a number",
+          },
+        },
+      },
     },
     {
       sequelize,

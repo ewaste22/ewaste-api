@@ -20,10 +20,51 @@ module.exports = (sequelize, DataTypes) => {
   }
   Transaction.init(
     {
-      cart_id: DataTypes.NUMBER,
-      status_transaction: DataTypes.STRING,
-      totalPoint_transaction: DataTypes.NUMBER,
-      pickup_id: DataTypes.NUMBER,
+      cart_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: "Cart Id cannot be empty",
+          },
+          isNumeric: {
+            msg: "Cart Id must be a number",
+          },
+        },
+        status_transaction: {
+          type: DataTypes.STRING,
+          allowNull: false,
+          validate: {
+            notEmpty: {
+              msg: "Status cannot be empty",
+            },
+          },
+        },
+        totalPoint_transaction: {
+          type: DataTypes.INTEGER,
+          allowNull: false,
+          validate: {
+            notEmpty: {
+              msg: "Total Point cannot be empty",
+            },
+            isNumeric: {
+              msg: "Total Point must be a number",
+            },
+          },
+        },
+        pickup_id: {
+          type: DataTypes.INTEGER,
+          allowNull: false,
+          validate: {
+            notEmpty: {
+              msg: "Pickup Id cannot be empty",
+            },
+            isNumeric: {
+              msg: "Pickup Id must be a number",
+            },
+          },
+        },
+      },
     },
     {
       sequelize,

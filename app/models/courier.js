@@ -16,10 +16,91 @@ module.exports = (sequelize, DataTypes) => {
   }
   Courier.init(
     {
-      email_courier: DataTypes.STRING,
-      password_courier: DataTypes.STRING,
-      fullname_courier: DataTypes.STRING,
-      image_courier: DataTypes.TEXT,
+      email_courier: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: "Email cannot be empty",
+          },
+          isEmail: {
+            msg: "Email format is not correct",
+          },
+        },
+      },
+      password_courier: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: "Password cannot be empty",
+          },
+          len: {
+            args: [6],
+            msg: "Password must be at least 6 characters",
+          },
+        },
+      },
+      fullname_courier: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: "Fullname cannot be empty",
+          },
+        },
+      },
+      image_courier: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: "Image cannot be empty",
+          },
+        },
+      },
+      transportationtype_courier: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: "Transportation Type cannot be empty",
+          },
+        },
+      },
+      maxload_courier: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: "Max Load cannot be empty",
+          },
+          isNumeric: {
+            msg: "Max Load must be a number",
+          },
+        },
+      },
+      nopol_courier: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: "Nopol cannot be empty",
+          },
+        },
+      },
+      nomor_courier: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: "Nomor cannot be empty",
+          },
+          isNumeric: {
+            msg: "Nomor must be a number",
+          },
+        },
+      },
     },
     {
       sequelize,

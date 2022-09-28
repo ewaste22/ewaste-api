@@ -16,12 +16,70 @@ module.exports = (sequelize, DataTypes) => {
   }
   User.init(
     {
-      email: DataTypes.STRING,
-      password: DataTypes.STRING,
-      fullname: DataTypes.STRING,
-      image_user: DataTypes.TEXT,
-      address: DataTypes.TEXT,
-      poin: DataTypes.NUMBER,
+      email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: "Email cannot be empty",
+          },
+          isEmail: {
+            msg: "Email format is not correct",
+          },
+        },
+      },
+      password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: "Password cannot be empty",
+          },
+          len: {
+            args: [6],
+            msg: "Password must be at least 6 characters",
+          },
+        },
+      },
+      fullname: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: "Fullname cannot be empty",
+          },
+        },
+      },
+      image_user: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: "Image cannot be empty",
+          },
+        },
+      },
+      address: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: "Address cannot be empty",
+          },
+        },
+      },
+      poin: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: "Poin cannot be empty",
+          },
+          isNumeric: {
+            msg: "Poin must be a number",
+          },
+        },
+      },
     },
     {
       sequelize,

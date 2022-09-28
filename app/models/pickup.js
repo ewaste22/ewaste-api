@@ -20,9 +20,36 @@ module.exports = (sequelize, DataTypes) => {
   }
   Pickup.init(
     {
-      status_pickup: DataTypes.STRING,
-      type_pickup: DataTypes.STRING,
-      courier_id: DataTypes.NUMBER,
+      status_pickup: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: "Status cannot be empty",
+          },
+        },
+      },
+      type_pickup: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: "Type cannot be empty",
+          },
+        },
+      },
+      courier_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: "Courier Id cannot be empty",
+          },
+          isNumeric: {
+            msg: "Courier Id must be a number",
+          },
+        },
+      },
     },
     {
       sequelize,

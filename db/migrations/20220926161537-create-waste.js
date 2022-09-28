@@ -1,39 +1,39 @@
-'use strict';
+"use strict";
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Wastes', {
+    await queryInterface.createTable("Wastes", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       name_waste: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       description_waste: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       category_id: {
-        type: Sequelize.NUMBER
+        type: Sequelize.INTEGER,
       },
       poin_waste: {
-        type: Sequelize.NUMBER
+        type: Sequelize.INTEGER,
       },
       image_waste: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Wastes');
-  }
+    await queryInterface.dropTable("Wastes");
+  },
 };

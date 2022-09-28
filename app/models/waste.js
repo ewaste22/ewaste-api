@@ -20,11 +20,57 @@ module.exports = (sequelize, DataTypes) => {
   }
   Waste.init(
     {
-      name_waste: DataTypes.STRING,
-      description_waste: DataTypes.TEXT,
-      category_id: DataTypes.NUMBER,
-      poin_waste: DataTypes.NUMBER,
-      image_waste: DataTypes.TEXT,
+      name_waste: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: "Name cannot be empty",
+          },
+        },
+      },
+      description_waste: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: "Description cannot be empty",
+          },
+        },
+      },
+      category_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: "Category Id cannot be empty",
+          },
+          isNumeric: {
+            msg: "Category Id must be a number",
+          },
+        },
+      },
+      poin_waste: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: "Poin cannot be empty",
+          },
+          isNumeric: {
+            msg: "Poin must be a number",
+          },
+        },
+      },
+      image_waste: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: "Image cannot be empty",
+          },
+        },
+      },
     },
     {
       sequelize,

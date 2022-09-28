@@ -16,10 +16,49 @@ module.exports = (sequelize, DataTypes) => {
   }
   Administrator.init(
     {
-      email_admin: DataTypes.STRING,
-      password: DataTypes.STRING,
-      fullname_admin: DataTypes.STRING,
-      image_admin: DataTypes.TEXT,
+      email_admin: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: "Email cannot be empty",
+          },
+          isEmail: {
+            msg: "Email format is not correct",
+          },
+        },
+      },
+      password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: "Password cannot be empty",
+          },
+          len: {
+            args: [6],
+            msg: "Password must be at least 6 characters",
+          },
+        },
+      },
+      fullname_admin: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: "Fullname cannot be empty",
+          },
+        },
+      },
+      image_admin: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: "Image cannot be empty",
+          },
+        },
+      },
     },
     {
       sequelize,

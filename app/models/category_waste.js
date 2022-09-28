@@ -16,7 +16,24 @@ module.exports = (sequelize, DataTypes) => {
   }
   Category_waste.init(
     {
-      name_category: DataTypes.STRING,
+      name_category: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: "Name cannot be empty",
+          },
+        },
+      },
+      typeof_category: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: "Type cannot be empty",
+          },
+        },
+      },
     },
     {
       sequelize,
