@@ -52,7 +52,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       image_user: {
         type: DataTypes.TEXT,
-        allowNull: false,
+        allowNull: true,
         validate: {
           notEmpty: {
             msg: "Image cannot be empty",
@@ -70,15 +70,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       poin: {
         type: DataTypes.INTEGER,
-        allowNull: false,
-        validate: {
-          notEmpty: {
-            msg: "Poin cannot be empty",
-          },
-          isNumeric: {
-            msg: "Poin must be a number",
-          },
-        },
+        allowNull: true,
       },
     },
     {
