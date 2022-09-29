@@ -17,6 +17,11 @@ apiRouter.put("/api/v1/posts/:id", controllers.api.v1.post.setPost, controllers.
 apiRouter.get("/api/v1/posts/:id", controllers.api.v1.post.setPost, controllers.api.v1.post.show);
 apiRouter.delete("/api/v1/posts/:id", controllers.api.v1.post.setPost, controllers.api.v1.post.destroy);
 
+// auth
+apiRouter.get("/auth/", controllers.api.v1.userController.index);
+apiRouter.post("/auth/register", controllers.api.v1.userController.register);
+apiRouter.post("/auth/login", controllers.api.v1.userController.login);
+
 /**
  * TODO: Delete this, this is just a demonstration of
  *       error handler

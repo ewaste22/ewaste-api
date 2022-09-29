@@ -3,7 +3,9 @@
  */
 
 const post = require("./post");
+const userController = require("./userController");
 
 module.exports = {
   post,
+  userController,
 };
