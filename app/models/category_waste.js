@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
-      typeof_category: {
+      typeOf_weight: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {

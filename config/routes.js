@@ -25,9 +25,17 @@ apiRouter.post("/auth/login", controllers.api.v1.userController.login);
 
 // news
 apiRouter.get("/api/v1/news", controllers.api.v1.newsController.findAllNews);
-apiRouter.post("/api/v1/news", validations.news.createNewsValidate, validations.checkValidate, controllers.api.v1.newsController.createNews);
+apiRouter.get("/api/v1/news/:id", controllers.api.v1.newsController.findNewsById);
+apiRouter.post("/api/v1/news", validations.bodyValidation.createNewsValidate, validations.checkValidate, controllers.api.v1.newsController.createNews);
 apiRouter.put("/api/v1/news/:id", controllers.api.v1.newsController.updateNews);
 apiRouter.delete("/api/v1/news/:id", controllers.api.v1.newsController.deleteNews);
+
+// category waste
+apiRouter.get("/api/v1/categoryWaste", controllers.api.v1.categoryWasteController.findAllCategoryWaste);
+apiRouter.get("/api/v1/categoryWaste/:id", controllers.api.v1.categoryWasteController.findCategoryWasteById);
+apiRouter.post("/api/v1/categoryWaste", validations.bodyValidation.createCategoryWasteValidate, validations.checkValidate, controllers.api.v1.categoryWasteController.createCategoryWaste);
+apiRouter.put("/api/v1/categoryWaste/:id", controllers.api.v1.categoryWasteController.updateCategoryWaste);
+apiRouter.delete("/api/v1/categoryWaste/:id", controllers.api.v1.categoryWasteController.deleteCategoryWaste);
 
 /**
  * TODO: Delete this, this is just a demonstration of
