@@ -4,8 +4,10 @@
 
 const post = require("./post");
 const userController = require("./userController");
+const newsController = require("./newsController");
 
 module.exports = {
   post,
   userController,
+  newsController,
 };

@@ -21,8 +21,8 @@ module.exports = {
     res.status(500).json({
       status: "error",
       error: {
-        name: err.name || "Error",
-        message: err.message || "Error",
+        name: err.name || "Internal Server Error",
+        message: err.message || "Internal Server Error",
       },
     });
   },
