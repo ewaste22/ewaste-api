@@ -1,15 +1,15 @@
-const { News } = require("../../../models");
+const { Category_waste } = require("../../../models");
 
 module.exports = {
-  async findAllNews(req, res) {
+  async findAllCategoryWaste(req, res) {
     try {
-      const news = await News.findAll();
+      const categoryWaste = await Category_waste.findAll();
       res.status(200).json({
         status: "success",
-        message: "News found successfully",
-        result: news.length,
+        message: "Category waste found successfully",
+        result: categoryWaste.length,
         data: {
-          news,
+          categoryWaste,
         },
       });
     } catch (err) {
@@ -20,21 +20,21 @@ module.exports = {
       });
     }
   },
-  async findNewsById(req, res) {
+  async findCategoryWasteById(req, res) {
     try {
-      const news = await News.findByPk(req.params.id);
-      if (!news) {
+      const categoryWaste = await Category_waste.findByPk(req.params.id);
+      if (!categoryWaste) {
         res.status(404).json({
           status: "failed",
           name: "Not Found",
-          message: "News not found",
+          message: "Category waste not found",
         });
       } else {
         res.status(200).json({
           status: "success",
-          message: "News found successfully",
+          message: "Category waste found successfully",
           data: {
-            news,
+            categoryWaste,
           },
         });
       }
@@ -46,14 +46,14 @@ module.exports = {
       });
     }
   },
-  async createNews(req, res) {
+  async createCategoryWaste(req, res) {
     try {
-      const news = await News.create(req.body);
+      const categoryWaste = await Category_waste.create(req.body);
       res.status(201).json({
         status: "success",
-        message: "News created successfully",
+        message: "Category Waste created successfully",
         data: {
-          news,
+          categoryWaste,
         },
       });
     } catch (err) {
@@ -70,24 +70,21 @@ module.exports = {
           });
     }
   },
-
-  async updateNews(req, res) {
+  async updateCategoryWaste(req, res) {
     try {
-      const news = await News.findByPk(req.params.id);
-      if (!news) {
+      const categoryWaste = await Category_waste.findByPk(req.params.id);
+      if (!categoryWaste) {
         res.status(404).json({
           status: "failed",
           name: "Not Found",
-          message: "News not found",
+          message: "Category Waste not found",
         });
       } else {
-        const { title_news, image_news, body_news, admin_id } = req.body;
-        await News.update(
+        const { name_category, typeOf_weight } = req.body;
+        await Category_waste.update(
           {
-            title_news,
-            image_news,
-            body_news,
-            admin_id,
+            name_category,
+            typeOf_weight,
           },
           {
             where: {
@@ -97,12 +94,10 @@ module.exports = {
         );
         res.status(200).json({
           status: "success",
-          message: "News updated successfully",
+          message: "Category Waste updated successfully",
           data: {
-            title_news,
-            image_news,
-            body_news,
-            admin_id,
+            name_category,
+            typeOf_weight,
           },
         });
       }
@@ -114,25 +109,24 @@ module.exports = {
       });
     }
   },
-
-  async deleteNews(req, res) {
+  async deleteCategoryWaste(req, res) {
     try {
-      const news = await News.findByPk(req.params.id);
-      if (!news) {
+      const categoryWaste = await Category_waste.findByPk(req.params.id);
+      if (!categoryWaste) {
         res.status(404).json({
           status: "failed",
           name: "Not Found",
-          message: "News not found",
+          message: "Category Waste not found",
         });
       } else {
-        await News.destroy({
+        await Category_waste.destroy({
           where: {
             id: req.params.id,
           },
         });
         res.status(200).json({
           status: "success",
-          message: "News deleted successfully",
+          message: "Category Waste deleted successfully",
         });
       }
     } catch (err) {

@@ -2,13 +2,13 @@
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.addColumn("Wastes", "typeOf_weight", {
+    await queryInterface.addColumn("Category_wastes", "typeOf_weight", {
       type: Sequelize.STRING,
       allowNull: false,
     });
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.removeColumn("Wastes", "typeOf_weight");
+    await queryInterface.removeColumn("Category_wastes", "typeOf_weight");
   },
 };
