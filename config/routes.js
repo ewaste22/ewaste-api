@@ -18,10 +18,26 @@ apiRouter.put("/api/v1/posts/:id", controllers.api.v1.post.setPost, controllers.
 apiRouter.get("/api/v1/posts/:id", controllers.api.v1.post.setPost, controllers.api.v1.post.show);
 apiRouter.delete("/api/v1/posts/:id", controllers.api.v1.post.setPost, controllers.api.v1.post.destroy);
 
-// auth
+// auth-user
 apiRouter.get("/auth/", controllers.api.v1.userController.index);
 apiRouter.post("/auth/register", controllers.api.v1.userController.register);
 apiRouter.post("/auth/login", controllers.api.v1.userController.login);
+apiRouter.patch("/auth/update/:id", controllers.api.v1.userController.update);
+apiRouter.patch("/auth/change-password/:id", controllers.api.v1.userController.changePassword);
+
+// auth-admin
+apiRouter.get("/auth/admin/", controllers.api.v1.adminController.index);
+apiRouter.post("/auth/admin/register", controllers.api.v1.adminController.register);
+apiRouter.post("/auth/admin/login", controllers.api.v1.adminController.login);
+apiRouter.patch("/auth/admin/update/:id", controllers.api.v1.adminController.update);
+apiRouter.patch("/auth/admin/change-password/:id", controllers.api.v1.adminController.changePassword);
+
+// auth-courier
+apiRouter.get("/auth/courier/", controllers.api.v1.courierController.index);
+apiRouter.post("/auth/courier/register", controllers.api.v1.courierController.register);
+apiRouter.post("/auth/courier/login", controllers.api.v1.courierController.login);
+apiRouter.patch("/auth/courier/update/:id", controllers.api.v1.courierController.update);
+apiRouter.patch("/auth/courier/change-password/:id", controllers.api.v1.courierController.changePassword);
 
 // news
 apiRouter.get("/api/v1/news", controllers.api.v1.newsController.findAllNews);

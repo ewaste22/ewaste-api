@@ -52,11 +52,11 @@ module.exports = (sequelize, DataTypes) => {
       },
       image_admin: {
         type: DataTypes.TEXT,
-        allowNull: false,
+        allowNull: true,
         validate: {
-          notEmpty: {
-            msg: "Image cannot be empty",
-          },
+          isUrl: {
+            msg: "Image must be a valid url",
+          }
         },
       },
     },

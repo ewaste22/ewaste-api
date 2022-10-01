@@ -1,4 +1,4 @@
-const userService = require("../../../services/userService")
+const adminService = require("../../../services/adminService")
 
 module.exports = {
     async index(req, res) {
@@ -18,7 +18,7 @@ module.exports = {
     async register(req, res) {
         try {
             const data = req.body
-            const user = await userService.register(data)
+            const user = await adminService.register(data)
             res.status(201).json({
                 message: 'success',
                 data: user
@@ -41,7 +41,7 @@ module.exports = {
     async login (req, res) {
         try {
             const data = req.body
-            const user = await userService.login(data)
+            const user = await adminService.login(data)
             res.status(200).json({
                 message: 'success',
                 data: {
@@ -82,7 +82,7 @@ module.exports = {
         try {
             const data = req.body
             const id = req.params.id
-            const user = await userService.update(id, data)
+            const user = await adminService.update(id, data)
             res.status(200).json({
                 message: 'success',
                 data: data
@@ -111,7 +111,7 @@ module.exports = {
         try {
             const data = req.body
             const id = req.params.id
-            const user = await userService.changePassword(id, data)
+            const user = await adminService.changePassword(id, data)
             res.status(200).json({
                 message: 'success',
                 data: data

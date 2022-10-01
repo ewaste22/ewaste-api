@@ -52,14 +52,14 @@ module.exports = (sequelize, DataTypes) => {
       },
       image_courier: {
         type: DataTypes.TEXT,
-        allowNull: false,
+        allowNull: true,
         validate: {
-          notEmpty: {
-            msg: "Image cannot be empty",
-          },
+          isUrl: {
+            msg: "Image must be a valid url",
+          }
         },
       },
-      transportationtype_courier: {
+      transportationType_courier: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
@@ -68,7 +68,7 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
-      maxload_courier: {
+      maxLoad_courier: {
         type: DataTypes.INTEGER,
         allowNull: false,
         validate: {
@@ -90,7 +90,7 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       nomor_courier: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
         validate: {
           notEmpty: {

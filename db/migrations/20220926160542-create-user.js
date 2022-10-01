@@ -26,6 +26,9 @@ module.exports = {
       poin: {
         type: Sequelize.INTEGER,
       },
+      phone_number: {
+        type: Sequelize.STRING,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

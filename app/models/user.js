@@ -18,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       email: {
         type: DataTypes.STRING,
+        unique: true,
         allowNull: false,
         validate: {
           notEmpty: {
@@ -26,6 +27,7 @@ module.exports = (sequelize, DataTypes) => {
           isEmail: {
             msg: "Email format is not correct",
           },
+          isLowercase: true,
         },
       },
       password: {
@@ -70,8 +72,17 @@ module.exports = (sequelize, DataTypes) => {
       },
       poin: {
         type: DataTypes.INTEGER,
-        allowNull: true,
+        defaultValue: 0,
       },
+      phone_number: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: "Phone number cannot be empty",
+          }
+        }
+      }
     },
     {
       sequelize,
