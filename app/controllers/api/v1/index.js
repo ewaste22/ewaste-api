@@ -3,15 +3,17 @@
  */
 
 const post = require("./post");
-const userController = require("./userController");
+const userController = require("./userController"); 
 const newsController = require("./newsController");
 const adminController = require("./adminController");
 const courierController = require("./courierController");
+const categoryWasteController = require("./categoryWasteController");
 
 module.exports = {
   post,
   userController,
   newsController,
   adminController,
-  courierController
+  courierController,
+  categoryWasteController,
 };

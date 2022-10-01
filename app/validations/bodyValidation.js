@@ -1,5 +1,5 @@
-const { body, param } = require("express-validator");
-const { News } = require("../models");
+const { body } = require("express-validator");
+const { Administrator } = require("../models");
 
 module.exports = {
   createNewsValidate: [
@@ -10,11 +10,12 @@ module.exports = {
       .notEmpty()
       .withMessage("Admin id is required")
       .custom((value = 0) => {
-        return News.findOne({ where: { id: value } }).then((news) => {
+        return Administrator.findOne({ where: { id: value } }).then((news) => {
           if (!news) {
             return Promise.reject("Admin id not found");
           }
         });
       }),
   ],
+  createCategoryWasteValidate: [body("name_category").notEmpty().withMessage("Name category waste is required"), body("typeOf_weight").notEmpty().withMessage("Type of weight is required")],
 };

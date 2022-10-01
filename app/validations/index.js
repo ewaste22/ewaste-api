@@ -1,7 +1,7 @@
 const checkValidate = require("./checkValidate");
-const news = require("./newsValidation");
+const bodyValidation = require("./bodyValidation");
 
 module.exports = {
   checkValidate,
-  news,
+  bodyValidation,
 };
