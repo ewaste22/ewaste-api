@@ -1,6 +1,7 @@
 const express = require("express");
 const controllers = require("../app/controllers");
 const validations = require("../app/validations");
+const middlewares = require("../app/middlewares");
 
 const appRouter = express.Router();
 const apiRouter = express.Router();
@@ -40,11 +41,11 @@ apiRouter.patch("/auth/courier/update/:id", controllers.api.v1.courierController
 apiRouter.patch("/auth/courier/change-password/:id", controllers.api.v1.courierController.changePassword);
 
 // news
-apiRouter.get("/api/v1/news", controllers.api.v1.newsController.findAllNews);
-apiRouter.get("/api/v1/news/:id", controllers.api.v1.newsController.findNewsById);
-apiRouter.post("/api/v1/news", validations.bodyValidation.createNewsValidate, validations.checkValidate, controllers.api.v1.newsController.createNews);
-apiRouter.put("/api/v1/news/:id", controllers.api.v1.newsController.updateNews);
-apiRouter.delete("/api/v1/news/:id", controllers.api.v1.newsController.deleteNews);
+apiRouter.get("/api/v1/news", middlewares.authMiddleware.authUser ,controllers.api.v1.newsController.findAllNews);
+apiRouter.get("/api/v1/news/:id", middlewares.authMiddleware.authUser, controllers.api.v1.newsController.findNewsById);
+apiRouter.post("/api/v1/news", middlewares.authMiddleware.authAdmin,validations.bodyValidation.createNewsValidate, validations.checkValidate, controllers.api.v1.newsController.createNews);
+apiRouter.put("/api/v1/news/:id", middlewares.authMiddleware.authAdmin ,controllers.api.v1.newsController.updateNews);
+apiRouter.delete("/api/v1/news/:id", middlewares.authMiddleware.authAdmin ,controllers.api.v1.newsController.deleteNews);
 
 // category waste
 apiRouter.get("/api/v1/categoryWaste", controllers.api.v1.categoryWasteController.findAllCategoryWaste);
