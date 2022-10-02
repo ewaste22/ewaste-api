@@ -19,25 +19,25 @@ apiRouter.get("/api/v1/posts/:id", controllers.api.v1.post.setPost, controllers.
 apiRouter.delete("/api/v1/posts/:id", controllers.api.v1.post.setPost, controllers.api.v1.post.destroy);
 
 // auth-user
-apiRouter.get("/auth/", controllers.api.v1.userController.index);
-apiRouter.post("/auth/register", controllers.api.v1.userController.register);
-apiRouter.post("/auth/login", controllers.api.v1.userController.login);
-apiRouter.patch("/auth/update/:id", controllers.api.v1.userController.update);
-apiRouter.patch("/auth/change-password/:id", controllers.api.v1.userController.changePassword);
+apiRouter.get("/api/v1/auth/", controllers.api.v1.userController.index);
+apiRouter.post("/api/v1/auth/register", controllers.api.v1.userController.register);
+apiRouter.post("/api/v1/auth/login", controllers.api.v1.userController.login);
+apiRouter.patch("/api/v1/auth/update/:id", controllers.api.v1.userController.update);
+apiRouter.patch("/api/v1/auth/change-password/:id", controllers.api.v1.userController.changePassword);
 
 // auth-admin
-apiRouter.get("/auth/admin/", controllers.api.v1.adminController.index);
-apiRouter.post("/auth/admin/register", controllers.api.v1.adminController.register);
-apiRouter.post("/auth/admin/login", controllers.api.v1.adminController.login);
-apiRouter.patch("/auth/admin/update/:id", controllers.api.v1.adminController.update);
-apiRouter.patch("/auth/admin/change-password/:id", controllers.api.v1.adminController.changePassword);
+apiRouter.get("/api/v1/auth/admin/", controllers.api.v1.adminController.index);
+apiRouter.post("/api/v1/auth/admin/register", controllers.api.v1.adminController.register);
+apiRouter.post("/api/v1/auth/admin/login", controllers.api.v1.adminController.login);
+apiRouter.patch("/api/v1/auth/admin/update/:id", controllers.api.v1.adminController.update);
+apiRouter.patch("/api/v1/auth/admin/change-password/:id", controllers.api.v1.adminController.changePassword);
 
 // auth-courier
-apiRouter.get("/auth/courier/", controllers.api.v1.courierController.index);
-apiRouter.post("/auth/courier/register", controllers.api.v1.courierController.register);
-apiRouter.post("/auth/courier/login", controllers.api.v1.courierController.login);
-apiRouter.patch("/auth/courier/update/:id", controllers.api.v1.courierController.update);
-apiRouter.patch("/auth/courier/change-password/:id", controllers.api.v1.courierController.changePassword);
+apiRouter.get("/api/v1/auth/courier", controllers.api.v1.courierController.index);
+apiRouter.post("/api/v1/auth/courier/register", controllers.api.v1.courierController.register);
+apiRouter.post("/api/v1/auth/courier/login", controllers.api.v1.courierController.login);
+apiRouter.patch("/api/v1/auth/courier/update/:id", controllers.api.v1.courierController.update);
+apiRouter.patch("/api/v1/auth/courier/change-password/:id", controllers.api.v1.courierController.changePassword);
 
 // news
 apiRouter.get("/api/v1/news", controllers.api.v1.newsController.findAllNews);
@@ -52,6 +52,13 @@ apiRouter.get("/api/v1/categoryWaste/:id", controllers.api.v1.categoryWasteContr
 apiRouter.post("/api/v1/categoryWaste", validations.bodyValidation.createCategoryWasteValidate, validations.checkValidate, controllers.api.v1.categoryWasteController.createCategoryWaste);
 apiRouter.put("/api/v1/categoryWaste/:id", controllers.api.v1.categoryWasteController.updateCategoryWaste);
 apiRouter.delete("/api/v1/categoryWaste/:id", controllers.api.v1.categoryWasteController.deleteCategoryWaste);
+
+// waste
+apiRouter.get("/api/v1/waste", controllers.api.v1.wasteController.findAllWaste);
+apiRouter.get("/api/v1/waste/:id", controllers.api.v1.wasteController.findWasteById);
+apiRouter.post("/api/v1/waste", validations.bodyValidation.createWasteValidate, validations.checkValidate, controllers.api.v1.wasteController.createWaste);
+apiRouter.put("/api/v1/waste/:id", controllers.api.v1.wasteController.updateWaste);
+apiRouter.delete("/api/v1/waste/:id", controllers.api.v1.wasteController.deleteWaste);
 
 /**
  * TODO: Delete this, this is just a demonstration of

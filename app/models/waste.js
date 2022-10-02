@@ -71,6 +71,18 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
+      weight_waste: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: "Weight cannot be empty",
+          },
+          isNumeric: {
+            msg: "Weight must be a number",
+          },
+        },
+      },
     },
     {
       sequelize,
