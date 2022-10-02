@@ -133,7 +133,7 @@ module.exports = {
                     name: err.name,
                     message: err.message
                 })
-            } else if (err.name === "badRequest") {
+            } else if (err.name === "badRequest" || err.name === "SequelizeValidationError") {
                 return res.status(400).json({
                     name: err.name,
                     message: err.message
@@ -153,6 +153,7 @@ module.exports = {
             const id = req.params.id
 
             const user = await User.findByPk(id)
+
             if (user.email === email) {
                 throw {
                     name : "badRequest",
@@ -192,7 +193,7 @@ module.exports = {
                     name: err.name,
                     message: err.message
                 })
-            } else if (err.name === "badRequest") {
+            } else if (err.name === "badRequest" || err.name === "SequelizeValidationError") {
                 return res.status(400).json({
                     name: err.name,
                     message: err.message
@@ -243,7 +244,7 @@ module.exports = {
                     name: err.name,
                     message: err.message
                 })
-            } else if (err.name === "badRequest") {
+            } else if (err.name === "badRequest" || err.name === "SequelizeValidationError") {
                 return res.status(400).json({
                     name: err.name,
                     message: err.message

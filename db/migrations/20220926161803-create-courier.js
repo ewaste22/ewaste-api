@@ -20,6 +20,18 @@ module.exports = {
       image_courier: {
         type: Sequelize.TEXT
       },
+      transportationType_courier: {
+        type: Sequelize.STRING
+      },
+      maxLoad_courier: {
+        type: Sequelize.STRING
+      },
+      nopol_courier: {
+        type: Sequelize.STRING
+      },
+      nomor_courier: {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
