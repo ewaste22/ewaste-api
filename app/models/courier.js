@@ -69,7 +69,7 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       maxLoad_courier: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
         validate: {
           notEmpty: {
