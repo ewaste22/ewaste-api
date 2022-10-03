@@ -2,6 +2,7 @@ const express = require("express");
 const controllers = require("../app/controllers");
 const validations = require("../app/validations");
 const middlewares = require("../app/middlewares");
+const uploadOnMemory = require("../app/utils/multer");
 
 const appRouter = express.Router();
 const apiRouter = express.Router();
@@ -35,17 +36,17 @@ apiRouter.patch("/api/v1/auth/admin/change-password/:id", controllers.api.v1.adm
 
 // auth-courier
 apiRouter.get("/api/v1/auth/courier", controllers.api.v1.courierController.index);
-apiRouter.post("/api/v1/auth/courier/register", controllers.api.v1.courierController.register);
+apiRouter.post("/api/v1/auth/courier/register", uploadOnMemory.single("image_courier"), controllers.api.v1.courierController.register);
 apiRouter.post("/api/v1/auth/courier/login", controllers.api.v1.courierController.login);
-apiRouter.patch("/api/v1/auth/courier/update/:id", controllers.api.v1.courierController.update);
+apiRouter.patch("/api/v1/auth/courier/update/:id", uploadOnMemory.single("image_courier"), controllers.api.v1.courierController.update);
 apiRouter.patch("/api/v1/auth/courier/change-password/:id", controllers.api.v1.courierController.changePassword);
 
 // news
-apiRouter.get("/api/v1/news", middlewares.authMiddleware.authUser ,controllers.api.v1.newsController.findAllNews);
+apiRouter.get("/api/v1/news", middlewares.authMiddleware.authUser, controllers.api.v1.newsController.findAllNews);
 apiRouter.get("/api/v1/news/:id", middlewares.authMiddleware.authUser, controllers.api.v1.newsController.findNewsById);
-apiRouter.post("/api/v1/news", middlewares.authMiddleware.authAdmin,validations.bodyValidation.createNewsValidate, validations.checkValidate, controllers.api.v1.newsController.createNews);
-apiRouter.put("/api/v1/news/:id", middlewares.authMiddleware.authAdmin ,controllers.api.v1.newsController.updateNews);
-apiRouter.delete("/api/v1/news/:id", middlewares.authMiddleware.authAdmin ,controllers.api.v1.newsController.deleteNews);
+apiRouter.post("/api/v1/news", middlewares.authMiddleware.authAdmin, validations.bodyValidation.createNewsValidate, validations.checkValidate, controllers.api.v1.newsController.createNews);
+apiRouter.put("/api/v1/news/:id", middlewares.authMiddleware.authAdmin, controllers.api.v1.newsController.updateNews);
+apiRouter.delete("/api/v1/news/:id", middlewares.authMiddleware.authAdmin, controllers.api.v1.newsController.deleteNews);
 
 // category waste
 apiRouter.get("/api/v1/categoryWaste", controllers.api.v1.categoryWasteController.findAllCategoryWaste);
