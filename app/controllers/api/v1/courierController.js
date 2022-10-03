@@ -1,4 +1,5 @@
 const { Courier } = require("../../../models");
+const cloudinary = require("../../../utils/cloudinary");
 const { hashPassword, checkPassword, createToken } = require("../../../utils/authUtil");
 
 module.exports = {
@@ -18,12 +19,24 @@ module.exports = {
     try {
       const { email_courier, password_courier, fullname_courier, transportationType_courier, maxLoad_courier, nopol_courier, nomor_courier } = req.body;
 
-      if (!email_courier || !password_courier || !fullname_courier || !transportationType_courier || !maxLoad_courier || !nopol_courier || !nomor_courier) {
+      if (!email_courier || !password_courier || !fullname_courier || !transportationType_courier || !maxLoad_courier || !nopol_courier || !nomor_courier || !req.file) {
         throw {
           name: "badRequest",
           message: "All field must be filled",
         };
       }
+
+      const fileBase64 = req.file.buffer.toString("base64");
+      const file = `data:${req.file.mimetype};base64,${fileBase64}`;
+
+      const image_courier = await cloudinary.uploader.upload(file, { folder: "couriers" }, function (error, result) {
+        if (error) {
+          return error;
+        } else {
+          console.log("success upload", result);
+        }
+      });
+
       const hash = await hashPassword(password_courier);
       const user = await Courier.findOne({
         where: {
@@ -40,6 +53,7 @@ module.exports = {
         const newUser = await Courier.create({
           email_courier,
           fullname_courier,
+          image_courier: image_courier.url,
           transportationType_courier,
           maxLoad_courier,
           nopol_courier,
@@ -144,17 +158,9 @@ module.exports = {
 
   async update(req, res) {
     try {
-      const { email_courier, fullname_courier, transportationType_courier, maxLoad_courier, nopol_courier, nomor_courier } = req.body;
       const id = req.params.id;
 
       const user = await Courier.findByPk(id);
-
-      if (user.email_courier === email_courier) {
-        throw {
-          name: "badRequest",
-          message: "Email already exist",
-        };
-      }
       if (!user) {
         throw {
           name: "badRequest",
@@ -162,31 +168,69 @@ module.exports = {
         };
       }
 
-      const updatedUser = await Courier.update(
-        {
-          email_courier,
-          fullname_courier,
-          transportationType_courier,
-          maxLoad_courier,
-          nopol_courier,
-          nomor_courier,
-        },
-        {
-          where: { id },
-        }
-      );
-
-      res.status(201).json({
-        message: "success",
-        data: {
-          email_courier,
-          fullname_courier,
-          transportationType_courier,
-          maxLoad_courier,
-          nopol_courier,
-          nomor_courier,
+      const email = await Courier.findOne({
+        where: {
+          email_courier: req.body.email_courier,
         },
       });
+
+      if (req.body.email_courier === email.email_courier && user.id !== email.id) {
+        throw {
+          name: "badRequest",
+          message: "Email already exist",
+        };
+      }
+
+      if (req.file) {
+        const public_id = user.image_courier.replace(/(.*)([\/](\w+))(\.(jpg|png|jpeg|webp))/gm, "$3");
+
+        await cloudinary.uploader.destroy(`couriers/${public_id}`);
+
+        const fileBase64 = req.file.buffer.toString("base64");
+        const file = `data:${req.file.mimetype};base64,${fileBase64}`;
+        cloudinary.uploader.upload(file, { folder: "couriers" }, async function (error, result) {
+          if (error) {
+            return error;
+          } else {
+            await Courier.update(
+              {
+                image_courier: result.url,
+                ...req.body,
+              },
+              {
+                where: {
+                  id,
+                },
+              }
+            );
+
+            res.status(200).json({
+              message: "success",
+            });
+          }
+        });
+      } else {
+        await Courier.update(
+          {
+            email_courier: req.body.email_courier,
+            fullname_courier: req.body.fullname_courier,
+            transportationType_courier: req.body.transportationType_courier,
+            maxLoad_courier: req.body.maxLoad_courier,
+            nopol_courier: req.body.nopol_courier,
+            nomor_courier: req.body.nomor_courier,
+          },
+          {
+            where: {
+              id,
+            },
+          }
+        );
+
+        res.status(200).json({
+          message: "Update success",
+          coy: "coy",
+        });
+      }
     } catch (err) {
       if (err.name === "wrongEmailPassword") {
         return res.status(401).json({
