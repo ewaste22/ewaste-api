@@ -1,17 +1,19 @@
 const { Administrator, User, Courier } = require('../models')
 const { decodedToken } = require('../utils/authUtil')
+const jwt = require("jsonwebtoken");
 
 module.exports = {
     async authAdmin(req, res, next) {
         try {
-            const { token } = req.headers
-
-            if (!token) {
+            const bearerToken = req.headers.authorization
+            if (!bearerToken) {
                 throw {
                     name: "unauthorized",
                     message: "You must login first"
                 }
             }
+            
+            const token = bearerToken.split("Bearer ")[1]
 
             const decoded = decodedToken(token)
 
@@ -51,14 +53,15 @@ module.exports = {
 
     async authUser(req, res, next) {
         try {
-            const { token } = req.headers
-
-            if (!token) {
+            const bearerToken = req.headers.authorization
+            if (!bearerToken) {
                 throw {
                     name: "unauthorized",
                     message: "You must login first"
                 }
             }
+            
+            const token = bearerToken.split("Bearer ")[1]
 
             const decoded = decodedToken(token)
 
@@ -98,14 +101,15 @@ module.exports = {
 
     async authCourier(req, res, next) {
         try {
-            const { token } = req.headers
-
-            if (!token) {
+            const bearerToken = req.headers.authorization
+            if (!bearerToken) {
                 throw {
                     name: "unauthorized",
                     message: "You must login first"
                 }
             }
+            
+            const token = bearerToken.split("Bearer ")[1]
 
             const decoded = decodedToken(token)
 
