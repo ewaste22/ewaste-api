@@ -4,7 +4,12 @@ const { Administrator, Category_waste } = require("../models");
 module.exports = {
   createNewsValidate: [
     body("title_news").notEmpty().withMessage("Title news is required"),
-    body("image_news").notEmpty().withMessage("Image news is required"),
+    body("image_news").custom((value, { req }) => {
+      if (!req.file) {
+        throw new Error("Image news is required");
+      }
+      return true;
+    }),
     body("body_news").notEmpty().withMessage("Body news is required"),
     body("admin_id")
       .notEmpty()

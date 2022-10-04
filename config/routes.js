@@ -44,8 +44,8 @@ apiRouter.patch("/api/v1/auth/courier/change-password/:id", controllers.api.v1.c
 // news
 apiRouter.get("/api/v1/news", middlewares.authMiddleware.authUser, controllers.api.v1.newsController.findAllNews);
 apiRouter.get("/api/v1/news/:id", middlewares.authMiddleware.authUser, controllers.api.v1.newsController.findNewsById);
-apiRouter.post("/api/v1/news", middlewares.authMiddleware.authAdmin, validations.bodyValidation.createNewsValidate, validations.checkValidate, controllers.api.v1.newsController.createNews);
-apiRouter.put("/api/v1/news/:id", middlewares.authMiddleware.authAdmin, controllers.api.v1.newsController.updateNews);
+apiRouter.post("/api/v1/news", middlewares.authMiddleware.authAdmin, uploadOnMemory.single("image_news"), validations.bodyValidation.createNewsValidate, validations.checkValidate, controllers.api.v1.newsController.createNews);
+apiRouter.put("/api/v1/news/:id", middlewares.authMiddleware.authAdmin, uploadOnMemory.single("image_news"), controllers.api.v1.newsController.updateNews);
 apiRouter.delete("/api/v1/news/:id", middlewares.authMiddleware.authAdmin, controllers.api.v1.newsController.deleteNews);
 
 // category waste
