@@ -1,4 +1,5 @@
 const { User } = require("../../../models");
+const cloudinary = require("../../../utils/cloudinary");
 const { hashPassword, checkPassword, createToken } = require("../../../utils/authUtil");
 
 module.exports = {
@@ -148,7 +149,15 @@ module.exports = {
 
       const user = await User.findByPk(id);
 
-      if (user.email === email) {
+      const userEmail = await User.findOne({
+        where: {
+          email: req.body.email,
+        },
+      });
+
+      console.log(userEmail, "userEmail");
+
+      if (req.body.email === userEmail.email && user.id !== userEmail.id) {
         throw {
           name: "badRequest",
           message: "Email already exist",
@@ -161,27 +170,62 @@ module.exports = {
         };
       }
 
-      const updatedUser = await User.update(
-        {
-          fullname,
-          email,
-          address,
-          phone_number,
-        },
-        {
-          where: { id },
-        }
-      );
+      if (req.file) {
+        if (user.image_user !== null) {
+          const public_id = user.image_user.replace(/(.*)([\/](\w+))(\.(jpg|png|jpeg|webp))/gm, "$3");
 
-      res.status(201).json({
-        message: "success",
-        data: {
-          fullname,
-          email,
-          address,
-          phone_number,
-        },
-      });
+          await cloudinary.uploader.destroy(`users/${public_id}`);
+        }
+
+        const fileBase64 = req.file.buffer.toString("base64");
+        const file = `data:${req.file.mimetype};base64,${fileBase64}`;
+        cloudinary.uploader.upload(file, { folder: "users" }, async function (error, result) {
+          if (error) {
+            return error;
+          } else {
+            await User.update(
+              {
+                fullname,
+                email,
+                address,
+                phone_number,
+                image_user: result.url,
+              },
+              {
+                where: {
+                  id,
+                },
+              }
+            );
+
+            res.status(200).json({
+              status: "success",
+              message: "Update success",
+              data: {
+                ...req.body,
+                image_user: result.url,
+              },
+            });
+          }
+        });
+      } else {
+        await User.update(
+          {
+            ...req.body,
+          },
+          {
+            where: { id },
+          }
+        );
+
+        res.status(201).json({
+          status: "success",
+          message: "Update success",
+          data: {
+            ...req.body,
+          },
+        });
+      }
     } catch (err) {
       if (err.name === "wrongEmailPassword") {
         return res.status(401).json({

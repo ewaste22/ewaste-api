@@ -62,9 +62,11 @@ module.exports = {
         });
 
         res.status(201).json({
-          name: "success",
+          status: "success",
           message: "Register success",
-          data: newUser,
+          data: {
+            newUser,
+          },
         });
       }
     } catch (err) {
@@ -205,7 +207,8 @@ module.exports = {
             );
 
             res.status(200).json({
-              message: "success",
+              status: "success",
+              message: "Update success",
               data: {
                 ...req.body,
                 image_courier: result.url,
@@ -231,6 +234,7 @@ module.exports = {
         );
 
         res.status(200).json({
+          status: "success",
           message: "Update success",
           data: {
             ...req.body,
