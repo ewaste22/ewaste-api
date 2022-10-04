@@ -206,6 +206,10 @@ module.exports = {
 
             res.status(200).json({
               message: "success",
+              data: {
+                ...req.body,
+                image_courier: result.url,
+              },
             });
           }
         });
@@ -228,7 +232,9 @@ module.exports = {
 
         res.status(200).json({
           message: "Update success",
-          coy: "coy",
+          data: {
+            ...req.body,
+          },
         });
       }
     } catch (err) {

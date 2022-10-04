@@ -29,9 +29,9 @@ apiRouter.patch("/api/v1/auth/change-password/:id", controllers.api.v1.userContr
 
 // auth-admin
 apiRouter.get("/api/v1/auth/admin/", controllers.api.v1.adminController.index);
-apiRouter.post("/api/v1/auth/admin/register", controllers.api.v1.adminController.register);
+apiRouter.post("/api/v1/auth/admin/register", uploadOnMemory.single("image_admin"), controllers.api.v1.adminController.register);
 apiRouter.post("/api/v1/auth/admin/login", controllers.api.v1.adminController.login);
-apiRouter.patch("/api/v1/auth/admin/update/:id", controllers.api.v1.adminController.update);
+apiRouter.patch("/api/v1/auth/admin/update/:id", uploadOnMemory.single("image_admin"), controllers.api.v1.adminController.update);
 apiRouter.patch("/api/v1/auth/admin/change-password/:id", controllers.api.v1.adminController.changePassword);
 
 // auth-courier
