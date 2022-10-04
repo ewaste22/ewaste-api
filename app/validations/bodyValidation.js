@@ -37,7 +37,12 @@ module.exports = {
           }
         });
       }),
-    body("image_waste").notEmpty().withMessage("Image waste is required"),
+    body("image_waste").custom((value, { req }) => {
+      if (!req.file) {
+        throw new Error("Image waste is required");
+      }
+      return true;
+    }),
     body("weight_waste").notEmpty().withMessage("Weight waste is required").isNumeric().withMessage("Weight waste must be number"),
   ],
 };
