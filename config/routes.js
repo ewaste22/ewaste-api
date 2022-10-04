@@ -58,8 +58,8 @@ apiRouter.delete("/api/v1/categoryWaste/:id", controllers.api.v1.categoryWasteCo
 // waste
 apiRouter.get("/api/v1/waste", controllers.api.v1.wasteController.findAllWaste);
 apiRouter.get("/api/v1/waste/:id", controllers.api.v1.wasteController.findWasteById);
-apiRouter.post("/api/v1/waste", validations.bodyValidation.createWasteValidate, validations.checkValidate, controllers.api.v1.wasteController.createWaste);
-apiRouter.put("/api/v1/waste/:id", controllers.api.v1.wasteController.updateWaste);
+apiRouter.post("/api/v1/waste", uploadOnMemory.single("image_waste"), validations.bodyValidation.createWasteValidate, validations.checkValidate, controllers.api.v1.wasteController.createWaste);
+apiRouter.put("/api/v1/waste/:id", uploadOnMemory.single("image_waste"), controllers.api.v1.wasteController.updateWaste);
 apiRouter.delete("/api/v1/waste/:id", controllers.api.v1.wasteController.deleteWaste);
 
 /**

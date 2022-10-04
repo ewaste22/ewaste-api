@@ -1,4 +1,5 @@
 const { Waste } = require("../../../models");
+const cloudinary = require("../../../utils/cloudinary");
 
 module.exports = {
   async findAllWaste(req, res) {
@@ -53,14 +54,20 @@ module.exports = {
   },
   async createWaste(req, res) {
     try {
-      const { name_waste, description_waste, category_id, image_waste, poin_waste, weight_waste } = req.body;
+      const fileBase64 = req.file.buffer.toString("base64");
+      const file = `data:${req.file.mimetype};base64,${fileBase64}`;
+
+      const image_waste = await cloudinary.uploader.upload(file, { folder: "wastes" }, function (error, result) {
+        if (error) {
+          return error;
+        } else {
+          console.log("success upload", result);
+        }
+      });
+
       const waste = await Waste.create({
-        name_waste,
-        description_waste,
-        category_id,
-        image_waste,
-        poin_waste,
-        weight_waste,
+        ...req.body,
+        image_waste: image_waste.url,
       });
       res.status(201).json({
         status: "success",
@@ -80,7 +87,6 @@ module.exports = {
   async updateWaste(req, res) {
     try {
       const { id } = req.params;
-      const { name_waste, description_waste, category_id, image_waste, poin_waste, weight_waste } = req.body;
 
       const waste = await Waste.findOne({
         where: {
@@ -95,33 +101,57 @@ module.exports = {
           message: "Waste not found",
         });
       } else {
-        await Waste.update(
-          {
-            name_waste,
-            description_waste,
-            category_id,
-            image_waste,
-            poin_waste,
-            weight_waste,
-          },
-          {
-            where: {
-              id,
+        if (req.file) {
+          const public_id = waste.image_waste.replace(/(.*)([\/](\w+))(\.(jpg|png|jpeg|webp))/gm, "$3");
+
+          await cloudinary.uploader.destroy(`wastes/${public_id}`);
+
+          const fileBase64 = req.file.buffer.toString("base64");
+          const file = `data:${req.file.mimetype};base64,${fileBase64}`;
+          cloudinary.uploader.upload(file, { folder: "wastes" }, async function (error, result) {
+            if (error) {
+              return error;
+            } else {
+              await Waste.update(
+                {
+                  ...req.body,
+                  image_waste: result.url,
+                },
+                {
+                  where: {
+                    id,
+                  },
+                }
+              );
+              res.status(200).json({
+                status: "success",
+                message: "Waste updated successfully",
+                data: {
+                  ...req.body,
+                  image_waste: result.url,
+                },
+              });
+            }
+          });
+        } else {
+          await Waste.update(
+            {
+              ...req.body,
             },
-          }
-        );
-        res.status(200).json({
-          status: "success",
-          message: "Waste updated successfully",
-          data: {
-            name_waste,
-            description_waste,
-            category_id,
-            image_waste,
-            poin_waste,
-            weight_waste,
-          },
-        });
+            {
+              where: {
+                id,
+              },
+            }
+          );
+          res.status(200).json({
+            status: "success",
+            message: "Waste updated successfully",
+            data: {
+              ...req.body,
+            },
+          });
+        }
       }
     } catch (err) {
       res.status(422).json({
@@ -148,6 +178,10 @@ module.exports = {
           message: "Waste not found",
         });
       } else {
+        const public_id = waste.image_waste.replace(/(.*)([\/](\w+))(\.(jpg|png|jpeg|webp))/gm, "$3");
+
+        await cloudinary.uploader.destroy(`wastes/${public_id}`);
+
         await Waste.destroy({
           where: {
             id,
