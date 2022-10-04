@@ -24,7 +24,7 @@ apiRouter.delete("/api/v1/posts/:id", controllers.api.v1.post.setPost, controlle
 apiRouter.get("/api/v1/auth/", controllers.api.v1.userController.index);
 apiRouter.post("/api/v1/auth/register", controllers.api.v1.userController.register);
 apiRouter.post("/api/v1/auth/login", controllers.api.v1.userController.login);
-apiRouter.patch("/api/v1/auth/update/:id", controllers.api.v1.userController.update);
+apiRouter.patch("/api/v1/auth/update/:id", uploadOnMemory.single("image_user"), controllers.api.v1.userController.update);
 apiRouter.patch("/api/v1/auth/change-password/:id", controllers.api.v1.userController.changePassword);
 
 // auth-admin
