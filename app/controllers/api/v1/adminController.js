@@ -1,4 +1,5 @@
 const { Administrator } = require("../../../models");
+const cloudinary = require("../../../utils/cloudinary");
 const { hashPassword, checkPassword, createToken } = require("../../../utils/authUtil");
 
 module.exports = {
@@ -18,7 +19,7 @@ module.exports = {
     try {
       const { fullname_admin, email_admin, password } = req.body;
 
-      if (!email_admin || !password || !fullname_admin) {
+      if (!email_admin || !password || !fullname_admin || !req.file) {
         throw {
           name: "badRequest",
           message: "All field must be filled",
@@ -38,16 +39,30 @@ module.exports = {
           message: "Email already exist",
         };
       } else if (!user) {
+        const fileBase64 = req.file.buffer.toString("base64");
+        const file = `data:${req.file.mimetype};base64,${fileBase64}`;
+
+        const image_admin = await cloudinary.uploader.upload(file, { folder: "administrators" }, function (error, result) {
+          if (error) {
+            return error;
+          } else {
+            console.log("success upload", result);
+          }
+        });
+
         const newUser = await Administrator.create({
           fullname_admin,
           email_admin,
           password: hash,
+          image_admin: image_admin.url,
         });
 
         res.status(201).json({
           name: "success",
           message: "Register success",
-          data: newUser,
+          data: {
+            newUser,
+          },
         });
       }
     } catch (err) {
@@ -152,30 +167,77 @@ module.exports = {
         };
       }
 
-      if (user.email_admin === email_admin) {
+      const email = await Administrator.findOne({
+        where: {
+          email_admin: req.body.email_admin,
+        },
+      });
+
+      if (req.body.email_admin === email.email_admin && user.id !== email.id) {
         throw {
           name: "badRequest",
           message: "Email already exist",
         };
       }
 
-      const updatedUser = await Administrator.update(
-        {
-          fullname_admin,
-          email_admin,
-        },
-        {
-          where: { id },
-        }
-      );
+      if (req.file) {
+        const public_id = user.image_admin.replace(/(.*)([\/](\w+))(\.(jpg|png|jpeg|webp))/gm, "$3");
 
-      res.status(201).json({
-        message: "success",
-        data: {
-          fullname_admin,
-          email_admin,
-        },
-      });
+        await cloudinary.uploader.destroy(`administrators/${public_id}`);
+
+        const fileBase64 = req.file.buffer.toString("base64");
+        const file = `data:${req.file.mimetype};base64,${fileBase64}`;
+
+        const image_admin = await cloudinary.uploader.upload(file, { folder: "administrators" }, function (error, result) {
+          if (error) {
+            return error;
+          } else {
+            console.log("success upload", result);
+          }
+        });
+
+        await Administrator.update(
+          {
+            fullname_admin,
+            email_admin,
+            image_admin: image_admin.url,
+          },
+          {
+            where: {
+              id,
+            },
+          }
+        );
+
+        res.status(200).json({
+          name: "success",
+          message: "Update success",
+          data: {
+            ...req.body,
+            image_admin: image_admin.url,
+          },
+        });
+      } else {
+        await Administrator.update(
+          {
+            fullname_admin,
+            email_admin,
+          },
+          {
+            where: {
+              id,
+            },
+          }
+        );
+
+        res.status(200).json({
+          name: "success",
+          message: "Update success",
+          data: {
+            ...req.body,
+          },
+        });
+      }
     } catch (err) {
       if (err.name === "wrongEmailPassword") {
         return res.status(401).json({
