@@ -156,17 +156,17 @@ module.exports = {
       });
 
       console.log(userEmail, "userEmail");
+      if (!user) {
+        throw {
+          name: "badRequest",
+          message: "User not found",
+        };
+      }
 
       if (req.body.email === userEmail.email && user.id !== userEmail.id) {
         throw {
           name: "badRequest",
           message: "Email already exist",
-        };
-      }
-      if (!user) {
-        throw {
-          name: "badRequest",
-          message: "User not found",
         };
       }
 
