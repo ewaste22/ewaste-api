@@ -1,0 +1,1110 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "E-Waste API",
+    "description": "This is a sample server E-waste server",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8000/api/v1/"
+    },
+    {
+      "url": "https://ewaste-api.herokuapp.com/api/v1/"
+    }
+  ],
+  "paths": {
+    "/auth/register": {
+      "post": {
+        "tags": ["Authentication User"],
+        "summary": "Add a new user",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "fullname": {
+                    "type": "string",
+                    "example": "John Doe"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "john@gmail.com"
+                  },
+                  "address": {
+                    "type": "string",
+                    "example": "Jl. Setiabudhi No. 193, Bandung"
+                  },
+                  "phone_number": {
+                    "type": "string",
+                    "example": "08123456789"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "123456"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Register success"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/User1"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": ["Authentication User"],
+        "summary": "Login user",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "john@gmail.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "123456"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/LoginSuccess"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/WrongEmailPassword"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      }
+    },
+    "/auth/update/{id}": {
+      "patch": {
+        "tags": ["Authentication User"],
+        "summary": "Update user profile",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of user to update",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "required": true,
+                    "type": "string",
+                    "example": "john@gmail.com"
+                  },
+                  "fullname": {
+                    "type": "string",
+                    "example": "John Doe Hernandez"
+                  },
+                  "address": {
+                    "type": "string",
+                    "example": "Jl. Setiabudhi No. 193, Bandung"
+                  },
+                  "phone_number": {
+                    "type": "string",
+                    "example": "08123456789"
+                  },
+                  "image_user": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Update success"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/User1Update"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      }
+    },
+    "/auth/change-password/{id}": {
+      "patch": {
+        "tags": ["Authentication User"],
+        "summary": "Change Password User",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of user to update",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "oldPassword": {
+                    "required": true,
+                    "type": "string",
+                    "example": "123456"
+                  },
+                  "newPassword": {
+                    "required": true,
+                    "type": "string",
+                    "example": "userpassword"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "success"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/WrongEmailPassword"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      }
+    },
+    "/auth/admin/register": {
+      "post": {
+        "tags": ["Authentication Admin"],
+        "summary": "Add a new Admin",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "fullname_admin": {
+                    "type": "string",
+                    "example": "Admin John Doe"
+                  },
+                  "email_admin": {
+                    "type": "string",
+                    "example": "adminjohn@gmail.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "123456"
+                  },
+                  "image_admin": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Register success"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Admin1"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      }
+    },
+    "/auth/admin/login": {
+      "post": {
+        "tags": ["Authentication Admin"],
+        "summary": "Login Admin",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email_admin": {
+                    "type": "string",
+                    "example": "adminjohn@gmail.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "123456"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/LoginSuccess"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/WrongEmailPassword"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      }
+    },
+    "/auth/admin/update/{id}": {
+      "patch": {
+        "tags": ["Authentication Admin"],
+        "summary": "Update admin profile",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of user to update",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email_admin": {
+                    "required": true,
+                    "type": "string",
+                    "example": "adminjohn@gmail.com"
+                  },
+                  "fullname_admin": {
+                    "type": "string",
+                    "example": "Admin John Doe Hernandez"
+                  },
+                  "image_admin": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Update success"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Admin1Update"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      }
+    },
+    "/auth/admin/change-password/{id}": {
+      "patch": {
+        "tags": ["Authentication Admin"],
+        "summary": "Change Password Admin",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of Admin to update",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "oldPassword": {
+                    "required": true,
+                    "type": "string",
+                    "example": "123456"
+                  },
+                  "newPassword": {
+                    "required": true,
+                    "type": "string",
+                    "example": "adminpassword"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "success"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/WrongEmailPassword"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      }
+    },
+    "/auth/courier/register": {
+      "post": {
+        "tags": ["Authentication Courier"],
+        "summary": "Add a new Courier",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email_courier": {
+                    "type": "string",
+                    "example": "kurirjohn@gmail.com"
+                  },
+                  "fullname_courier": {
+                    "type": "string",
+                    "example": "Kurir John Doe"
+                  },
+                  "password_courier": {
+                    "type": "string",
+                    "example": "123456"
+                  },
+                  "transportationType_courier": {
+                    "type": "string",
+                    "example": "Pick Up Bak Terbuka"
+                  },
+                  "maxLoad_courier": {
+                    "type": "number",
+                    "example": 50
+                  },
+                  "nopol_courier": {
+                    "type": "string",
+                    "example": "D 1 XYZ"
+                  },
+                  "nomor_courier": {
+                    "type": "string",
+                    "example": "081234567"
+                  },
+                  "image_courier": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Register success"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Courier1"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      }
+    },
+    "/auth/courier/login": {
+      "post": {
+        "tags": ["Authentication Courier"],
+        "summary": "Login Courier",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email_courier": {
+                    "type": "string",
+                    "example": "kurirjohn@gmail.com"
+                  },
+                  "password_courier": {
+                    "type": "string",
+                    "example": "123456"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/LoginSuccess"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/WrongEmailPassword"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      }
+    },
+    "/auth/courier/update/{id}": {
+      "patch": {
+        "tags": ["Authentication Courier"],
+        "summary": "Update courier profile",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of courier to update",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email_courier": {
+                    "type": "string",
+                    "example": "kurirjohn@gmail.com"
+                  },
+                  "fullname_courier": {
+                    "type": "string",
+                    "example": "Kurir John Doe"
+                  },
+                  "transportationType_courier": {
+                    "type": "string",
+                    "example": "Pick Up Bak Terbuka"
+                  },
+                  "maxLoad_courier": {
+                    "type": "number",
+                    "example": 50
+                  },
+                  "nopol_courier": {
+                    "type": "string",
+                    "example": "D 1 XYZ"
+                  },
+                  "nomor_courier": {
+                    "type": "string",
+                    "example": "081234567"
+                  },
+                  "image_courier": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Update success"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Courier1Update"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      }
+    },
+    "/auth/courier/change-password/{id}": {
+      "patch": {
+        "tags": ["Authentication Courier"],
+        "summary": "Change Password Courier",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of Courier to update",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "oldPassword": {
+                    "required": true,
+                    "type": "string",
+                    "example": "123456"
+                  },
+                  "newPassword": {
+                    "required": true,
+                    "type": "string",
+                    "example": "kurirpassword"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Update success"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/WrongEmailPassword"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "User1": {
+        "type": "object",
+        "properties": {
+          "poin": {
+            "type": "integer",
+            "example": 0
+          },
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "fullname": {
+            "type": "string",
+            "example": "User1"
+          },
+          "email": {
+            "type": "string",
+            "example": "user1@gmail.com"
+          },
+          "address": {
+            "type": "string",
+            "example": "Jl. User 1"
+          },
+          "phone_number": {
+            "type": "string",
+            "example": "08123456789"
+          },
+          "password": {
+            "type": "string",
+            "example": "xxxxxxx"
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2022-10-05T00:12:24.795Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "example": "2022-10-05T00:12:24.795Z"
+          },
+          "image_user": {
+            "type": "string",
+            "example": null
+          }
+        }
+      },
+      "User1Update": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "user1@gmail.com"
+          },
+          "fullname": {
+            "type": "string",
+            "example": "User1 Update"
+          },
+          "address": {
+            "type": "string",
+            "example": "Jl. User 1 Update"
+          },
+          "phone_number": {
+            "type": "string",
+            "example": "08123456789"
+          }
+        }
+      },
+      "Admin1": {
+        "type": "object",
+        "properties": {
+          "newUser": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "example": 1
+              },
+              "fullname_admin": {
+                "type": "string",
+                "example": "Admin John Doe"
+              },
+              "email_admin": {
+                "type": "string",
+                "example": "adminjohn@gmail.com"
+              },
+              "password": {
+                "type": "string",
+                "example": "xxxxxxx"
+              },
+              "image_admin": {
+                "type": "string",
+                "example": null
+              },
+              "updatedAt": {
+                "type": "string",
+                "example": "2022-10-05T00:12:24.795Z"
+              },
+              "createdAt": {
+                "type": "string",
+                "example": "2022-10-05T00:12:24.795Z"
+              }
+            }
+          }
+        }
+      },
+      "Admin1Update": {
+        "type": "object",
+        "properties": {
+          "email_admin": {
+            "type": "string",
+            "example": "adminjohn@gmail.com"
+          },
+          "fullname_admin": {
+            "type": "string",
+            "example": "Admin John Doe Update"
+          },
+          "image_admin": {
+            "type": "string",
+            "example": null
+          }
+        }
+      },
+      "Courier1": {
+        "type": "object",
+        "properties": {
+          "newUser": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "example": 1
+              },
+              "email_courier": {
+                "type": "string",
+                "example": "kurirjohn@gmail.com"
+              },
+              "fullname_courier": {
+                "type": "string",
+                "example": "Kurir John Doe"
+              },
+              "image_courier": {
+                "type": "string",
+                "example": null
+              },
+              "transportationType_courier": {
+                "type": "string",
+                "example": "Mobil Pickup Terbuka"
+              },
+              "maxLoad_courier": {
+                "type": "integer",
+                "example": 50
+              },
+              "nopol_courier": {
+                "type": "string",
+                "example": "B 1234 ABC"
+              },
+              "nomor_courier": {
+                "type": "string",
+                "example": "08123456789"
+              },
+              "password": {
+                "type": "string",
+                "example": "xxxxxxx"
+              },
+              "updatedAt": {
+                "type": "string",
+                "example": "2022-10-05T00:12:24.795Z"
+              },
+              "createdAt": {
+                "type": "string",
+                "example": "2022-10-05T00:12:24.795Z"
+              }
+            }
+          }
+        }
+      },
+      "Courier1Update": {
+        "type": "object",
+        "properties": {
+          "email_courier": {
+            "type": "string",
+            "example": "kurirjohn@gmail.com"
+          },
+          "fullname_courier": {
+            "type": "string",
+            "example": "Kurir John Doe Hernadez"
+          },
+          "transportationType_courier": {
+            "type": "string",
+            "example": "Mobil Pickup Terbuka"
+          },
+          "maxLoad_courier": {
+            "type": "integer",
+            "example": 50
+          },
+          "nopol_courier": {
+            "type": "string",
+            "example": "B 1234 ABC"
+          },
+          "nomor_courier": {
+            "type": "string",
+            "example": "08123456789"
+          },
+          "image_courier": {
+            "type": "string",
+            "example": null
+          }
+        }
+      }
+    },
+    "responses": {
+      "BadRequest": {
+        "description": "BadRequest",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "badRequest"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "All field must be filled"
+                }
+              }
+            }
+          }
+        }
+      },
+      "WrongEmailPassword": {
+        "description": "Email or Password Are Wrong",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "wrongEmailPassword"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Wrong email or password"
+                }
+              }
+            }
+          }
+        }
+      },
+      "Unauthorized": {
+        "description": "Unauthorized",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "notLogin"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "You are not login/access_token is wrong"
+                }
+              }
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "Not Found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "LoginSuccess": {
+        "description": "Success",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "id": {
+                  "type": "integer",
+                  "example": 1
+                },
+                "token": {
+                  "type": "string",
+                  "example": "xxxxxxx"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
