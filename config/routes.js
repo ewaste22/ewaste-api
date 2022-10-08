@@ -4,12 +4,15 @@ const validations = require("../app/validations");
 const middlewares = require("../app/middlewares");
 const uploadOnMemory = require("../app/utils/multer");
 
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("../docs/swagger.json");
+
 const appRouter = express.Router();
 const apiRouter = express.Router();
 
 /** Mount GET / handler */
 appRouter.get("/", controllers.main.index);
-
+apiRouter.use("/documentation", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 /**
  * TODO: Implement your own API
  *       implementations
