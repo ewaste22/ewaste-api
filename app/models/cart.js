@@ -62,12 +62,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       status_cart: {
         type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          notEmpty: {
-            msg: "Status cannot be empty",
-          },
-        },
+        defaultValue: "pending",
       },
     },
     {

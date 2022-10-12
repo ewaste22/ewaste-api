@@ -10,6 +10,7 @@ const courierController = require("./courierController");
 const categoryWasteController = require("./categoryWasteController");
 const wasteController = require("./wasteController");
 const pickupController = require("./pickupController");
+const cartController = require("./cartController");
 
 module.exports = {
   post,
@@ -20,4 +21,5 @@ module.exports = {
   categoryWasteController,
   wasteController,
   pickupController,
+  cartController,
 };
