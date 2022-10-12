@@ -62,6 +62,14 @@ apiRouter.post("/api/v1/waste", uploadOnMemory.single("image_waste"), validation
 apiRouter.put("/api/v1/waste/:id", uploadOnMemory.single("image_waste"), controllers.api.v1.wasteController.updateWaste);
 apiRouter.delete("/api/v1/waste/:id", controllers.api.v1.wasteController.deleteWaste);
 
+// pickup
+apiRouter.get("/api/v1/pickup", controllers.api.v1.pickupController.findAllPickup);
+apiRouter.get("/api/v1/pickup/:id", controllers.api.v1.pickupController.findPickupById);
+apiRouter.post("/api/v1/pickup", validations.bodyValidation.createPickupValidate, validations.checkValidate,controllers.api.v1.pickupController.createPickup);
+apiRouter.put("/api/v1/pickup/:id", controllers.api.v1.pickupController.updatePickup);
+apiRouter.delete("/api/v1/pickup/:id", controllers.api.v1.pickupController.deletePickup);
+apiRouter.get("/api/v1/pickup/courier/:id", controllers.api.v1.pickupController.findPickupByCourierId);
+
 /**
  * TODO: Delete this, this is just a demonstration of
  *       error handler
