@@ -45,4 +45,14 @@ module.exports = {
     }),
     body("weight_waste").notEmpty().withMessage("Weight waste is required").isNumeric().withMessage("Weight waste must be number"),
   ],
+  createPickupValidate: [
+    body("status_pickup").notEmpty().withMessage("Status pickup is required"),
+    body("type_pickup").notEmpty().withMessage("Type pickup is required"),
+    body("courier_id").notEmpty().withMessage("Courier id is required").isNumeric().withMessage("Courier id must be number"),
+  ],
+  createCartValidate: [
+    body("user_id").notEmpty().withMessage("User id is required").isNumeric().withMessage("User id must be number"),
+    body("waste_id").notEmpty().withMessage("Waste id is required").isNumeric().withMessage("Waste id must be number"),
+    body("total_waste").notEmpty().withMessage("Total waste is required").isNumeric().withMessage("Total waste must be number"),
+  ],
 };

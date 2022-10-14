@@ -65,6 +65,24 @@ apiRouter.post("/api/v1/waste", uploadOnMemory.single("image_waste"), validation
 apiRouter.put("/api/v1/waste/:id", uploadOnMemory.single("image_waste"), controllers.api.v1.wasteController.updateWaste);
 apiRouter.delete("/api/v1/waste/:id", controllers.api.v1.wasteController.deleteWaste);
 
+// pickup
+apiRouter.get("/api/v1/pickup", controllers.api.v1.pickupController.findAllPickup);
+apiRouter.get("/api/v1/pickup/:id", controllers.api.v1.pickupController.findPickupById);
+apiRouter.post("/api/v1/pickup", validations.bodyValidation.createPickupValidate, validations.checkValidate,controllers.api.v1.pickupController.createPickup);
+apiRouter.put("/api/v1/pickup/:id", controllers.api.v1.pickupController.updatePickup);
+apiRouter.delete("/api/v1/pickup/:id", controllers.api.v1.pickupController.deletePickup);
+apiRouter.get("/api/v1/pickup/courier/:id", controllers.api.v1.pickupController.findPickupByCourierId);
+
+// cart
+apiRouter.get("/api/v1/cart", controllers.api.v1.cartController.findAllCart);
+apiRouter.get("/api/v1/cart/:id", controllers.api.v1.cartController.findCartById);
+apiRouter.post("/api/v1/cart", validations.bodyValidation.createCartValidate, validations.checkValidate, controllers.api.v1.cartController.createCart);
+apiRouter.put("/api/v1/cart/:id", controllers.api.v1.cartController.updateCart);
+apiRouter.delete("/api/v1/cart/:id", controllers.api.v1.cartController.deleteCart);
+apiRouter.get("/api/v1/cart/user/:id", controllers.api.v1.cartController.findCartByUserId);
+apiRouter.get("/api/v1/cart/user/:id/pending", controllers.api.v1.cartController.findCartPendingByUserId);
+apiRouter.get("/api/v1/cart/user/:id/status", controllers.api.v1.cartController.findCartStatusByUserId);
+
 /**
  * TODO: Delete this, this is just a demonstration of
  *       error handler
