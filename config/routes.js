@@ -38,7 +38,7 @@ apiRouter.patch("/api/v1/auth/admin/update/:id", uploadOnMemory.single("image_ad
 apiRouter.patch("/api/v1/auth/admin/change-password/:id", controllers.api.v1.adminController.changePassword);
 
 // auth-courier
-apiRouter.get("/api/v1/auth/courier", controllers.api.v1.courierController.index);
+apiRouter.get("/api/v1/auth/courier", middlewares.authMiddleware.authCourier,controllers.api.v1.courierController.getCurrentCourier);
 apiRouter.post("/api/v1/auth/courier/register", uploadOnMemory.single("image_courier"), controllers.api.v1.courierController.register);
 apiRouter.post("/api/v1/auth/courier/login", controllers.api.v1.courierController.login);
 apiRouter.patch("/api/v1/auth/courier/update/:id", uploadOnMemory.single("image_courier"), controllers.api.v1.courierController.update);
