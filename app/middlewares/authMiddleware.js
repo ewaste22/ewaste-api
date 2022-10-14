@@ -118,13 +118,14 @@ module.exports = {
                     id: decoded.id
                 }
             })
-
+            
             if (!user) {
                 throw {
                     name: "unauthorized",
                     message: "You must login first"
                 }
             }
+            req.courier = user
             return next()
         } catch (err) {
             if (err.name === "unauthorized") {

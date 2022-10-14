@@ -25,6 +25,8 @@ module.exports = {
           message: "All field must be filled",
         };
       }
+      console.log(req.file);
+      console.log(req.body);
 
       const fileBase64 = req.file.buffer.toString("base64");
       const file = `data:${req.file.mimetype};base64,${fileBase64}`;
@@ -308,4 +310,19 @@ module.exports = {
       }
     }
   },
+  async getCurrentCourier(req, res) {
+    try{
+      res.status(200).json({
+        status: "success",
+        data: {
+          courier: req.courier,
+        },
+      })
+    }catch(err){
+      return res.status(500).json({
+        name: err.name || "InternalServerError",
+        message: err.message || "Internal Server Error",
+      });
+    }
+  }
 };
