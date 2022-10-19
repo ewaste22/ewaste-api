@@ -5,7 +5,7 @@
 /** Destruct environment variable to get database configuration */
 /* .env variables */
 require("dotenv").config();
-const { DB_USERNAME, DB_PASSWORD, DB_HOST, DB_NAME } = process.env;
+const { DB_USERNAME, DB_PASSWORD, DB_HOST, DB_NAME, DB_PORT } = process.env;
 
 module.exports = {
   development: {
@@ -20,6 +20,7 @@ module.exports = {
     password: DB_PASSWORD,
     database: `${DB_NAME}_test`,
     host: DB_HOST,
+    port: DB_PORT,
     dialect: "postgres",
   },
   production: {
@@ -31,5 +32,13 @@ module.exports = {
         rejectUnauthorized: false,
       },
     },
+  },
+  production2: {
+    username: DB_USERNAME,
+    password: DB_PASSWORD,
+    database: `${DB_NAME}_production`,
+    host: DB_HOST,
+    port: DB_PORT,
+    dialect: "postgres",
   },
 };
