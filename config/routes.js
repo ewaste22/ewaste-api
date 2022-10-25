@@ -83,6 +83,12 @@ apiRouter.get("/api/v1/cart/user/:id", controllers.api.v1.cartController.findCar
 apiRouter.get("/api/v1/cart/user/:id/pending", controllers.api.v1.cartController.findCartPendingByUserId);
 apiRouter.get("/api/v1/cart/user/:id/status", controllers.api.v1.cartController.findCartStatusByUserId);
 
+// dropbox
+apiRouter.get("/api/v1/dropbox", controllers.api.v1.dropboxController.findAllDropbox)
+apiRouter.post("/api/v1/dropbox", validations.bodyValidation.createDropboxValidate, validations.checkValidate, controllers.api.v1.dropboxController.createDropbox);
+apiRouter.put("/api/v1/dropbox/:id", controllers.api.v1.dropboxController.updateDropbox);
+apiRouter.delete("/api/v1/dropbox/:id", controllers.api.v1.dropboxController.deleteDropbox);
+
 /**
  * TODO: Delete this, this is just a demonstration of
  *       error handler

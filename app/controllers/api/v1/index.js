@@ -11,6 +11,7 @@ const categoryWasteController = require("./categoryWasteController");
 const wasteController = require("./wasteController");
 const pickupController = require("./pickupController");
 const cartController = require("./cartController");
+const dropboxController = require("./dropboxController")
 
 module.exports = {
   post,
@@ -22,4 +23,5 @@ module.exports = {
   wasteController,
   pickupController,
   cartController,
+  dropboxController
 };
