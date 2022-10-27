@@ -55,4 +55,8 @@ module.exports = {
     body("waste_id").notEmpty().withMessage("Waste id is required").isNumeric().withMessage("Waste id must be number"),
     body("total_waste").notEmpty().withMessage("Total waste is required").isNumeric().withMessage("Total waste must be number"),
   ],
+  createDropboxValidate: [
+    body("Name_dropbox").notEmpty().withMessage("Name is required"),
+    body("Address_dropbox").notEmpty().withMessage("Address is required")
+  ]
 };
