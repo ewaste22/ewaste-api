@@ -1,5 +1,6 @@
 const { Administrator, User, Courier } = require('../models')
 const { decodedToken } = require('../utils/authUtil')
+const { Op } = require("sequelize");
 const jwt = require("jsonwebtoken");
 
 module.exports = {
@@ -16,12 +17,21 @@ module.exports = {
             const token = bearerToken.split("Bearer ")[1]
 
             const decoded = decodedToken(token)
+            console.log(decoded);
 
             const user = await Administrator.findOne({
                 where: {
-                    id: decoded.id
+                    [Op.and]: [
+                        {
+                            id: decoded.id
+                        },
+                        {
+                            email_admin: decoded.email_admin
+                        },
+                    ]
                 }
             })
+
 
             if (!user) {
                 throw {
@@ -29,7 +39,9 @@ module.exports = {
                     message: "You must login first"
                 }
             }
+            req.admin = user;
             return next()
+            
         } catch (err) {
             if (err.name === "unauthorized") {
                 return res.status(403).json({
@@ -67,7 +79,14 @@ module.exports = {
 
             const user = await User.findOne({
                 where: {
-                    id: decoded.id
+                    [Op.and]: [
+                        {
+                            id: decoded.id
+                        },
+                        {
+                            email: decoded.email
+                        },
+                    ]
                 }
             })
 
@@ -77,6 +96,7 @@ module.exports = {
                     message: "You must login first"
                 }
             }
+            req.user = user;
             return next()
         } catch (err) {
             if (err.name === "unauthorized") {
@@ -115,7 +135,14 @@ module.exports = {
 
             const user = await Courier.findOne({
                 where: {
-                    id: decoded.id
+                    [Op.and]: [
+                        {
+                            id: decoded.id
+                        },
+                        {
+                            email_courier: decoded.email_courier
+                        },
+                    ]
                 }
             })
             
