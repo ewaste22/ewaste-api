@@ -24,21 +24,30 @@ apiRouter.get("/api/v1/posts/:id", controllers.api.v1.post.setPost, controllers.
 apiRouter.delete("/api/v1/posts/:id", controllers.api.v1.post.setPost, controllers.api.v1.post.destroy);
 
 // auth-user
-apiRouter.get("/api/v1/auth/", controllers.api.v1.userController.index);
+apiRouter.get("/api/v1/auth/whoami",middlewares.authMiddleware.authUser, controllers.api.v1.userController.getCurrentUser);
+apiRouter.get("/api/v1/auth/:id",middlewares.authMiddleware.authUser, controllers.api.v1.userController.getUserById);
 apiRouter.post("/api/v1/auth/register", controllers.api.v1.userController.register);
 apiRouter.post("/api/v1/auth/login", controllers.api.v1.userController.login);
 apiRouter.patch("/api/v1/auth/update/:id", uploadOnMemory.single("image_user"), controllers.api.v1.userController.update);
 apiRouter.patch("/api/v1/auth/change-password/:id", controllers.api.v1.userController.changePassword);
 
 // auth-admin
-apiRouter.get("/api/v1/auth/admin/", controllers.api.v1.adminController.index);
+apiRouter.get("/api/v1/auth/admin", 
+(req, res) => {
+  res.status(200).json({
+    message: "please auth!!",
+  });
+});
+apiRouter.get("/api/v1/auth/admin/whoami",middlewares.authMiddleware.authAdmin, controllers.api.v1.adminController.getCurrentAdmin);
+apiRouter.get('/api/v1/auth/admin/:id', middlewares.authMiddleware.authAdmin, controllers.api.v1.adminController.getAdminById);
 apiRouter.post("/api/v1/auth/admin/register", uploadOnMemory.single("image_admin"), controllers.api.v1.adminController.register);
 apiRouter.post("/api/v1/auth/admin/login", controllers.api.v1.adminController.login);
 apiRouter.patch("/api/v1/auth/admin/update/:id", uploadOnMemory.single("image_admin"), controllers.api.v1.adminController.update);
 apiRouter.patch("/api/v1/auth/admin/change-password/:id", controllers.api.v1.adminController.changePassword);
 
 // auth-courier
-apiRouter.get("/api/v1/auth/courier", middlewares.authMiddleware.authCourier,controllers.api.v1.courierController.getCurrentCourier);
+apiRouter.get("/api/v1/auth/courier/whoami", middlewares.authMiddleware.authCourier,controllers.api.v1.courierController.getCurrentCourier);
+apiRouter.get("/api/v1/auth/courier/:id", middlewares.authMiddleware.authCourier,controllers.api.v1.courierController.getCourierById);
 apiRouter.post("/api/v1/auth/courier/register", uploadOnMemory.single("image_courier"), controllers.api.v1.courierController.register);
 apiRouter.post("/api/v1/auth/courier/login", controllers.api.v1.courierController.login);
 apiRouter.patch("/api/v1/auth/courier/update/:id", uploadOnMemory.single("image_courier"), controllers.api.v1.courierController.update);

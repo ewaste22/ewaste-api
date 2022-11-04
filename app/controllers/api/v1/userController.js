@@ -293,4 +293,53 @@ module.exports = {
       }
     }
   },
+  async getCurrentUser(req, res) {
+    try{
+      res.status(200).json({
+        status: "success",
+        message: "Get current user success",
+        data: {
+          user: req.user,
+        },
+      })
+    }catch(err){
+      return res.status(500).json({
+        name: err.name || "InternalServerError",
+        message: err.message || "Internal Server Error",
+      });
+    }
+  },
+  async getUserById(req, res) {
+    try{
+      const id = req.params.id;
+      const user = await User.findByPk(id);
+
+      if(!user){
+        throw {
+          name: "badRequest",
+          message: "User not found",
+        };
+      }
+
+      res.status(200).json({
+        status: "success",
+        message: "Get user by id success",
+        data: {
+          user,
+        },
+      })
+    }catch(err){
+      if(err.name === "badRequest"){
+        return res.status(400).json({
+          name: err.name,
+          message: err.message,
+        });
+      }else{
+        return res.status(500).json({
+          name: err.name,
+          message: err.message,
+        });
+      }
+    }
+  }
 };

@@ -305,4 +305,51 @@ module.exports = {
       }
     }
   },
+  async getCurrentAdmin(req, res){
+    try{
+      res.status(200).json({
+        status: "success",
+        message: "Get current admin success",
+        data: {
+          admin: req.admin,
+        },
+      })
+    }catch(err){
+      return res.status(500).json({
+        name: err.name || "InternalServerError",
+        message: err.message || "Internal Server Error",
+      });
+    }
+  },
+  async getAdminById(req, res){
+    try{
+      const id = req.params.id;
+      const admin = await Administrator.findByPk(id);
+      if(!admin){
+        throw {
+          name: "badRequest",
+          message: "Admin not found",
+        };
+      }
+      res.status(200).json({
+        status: "success",
+        message: "Get admin by id success",
+        data: {
+          admin,
+        },
+      })
+    }catch(err){
+      if (err.name === "badRequest") {
+        return res.status(400).json({
+          name: err.name,
+          message: err.message,
+        });
+      } else {
+        return res.status(500).json({
+          name: err.name,
+          message: err.message,
+        });
+      }
+    }
+  }
 };

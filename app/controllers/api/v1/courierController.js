@@ -25,8 +25,6 @@ module.exports = {
           message: "All field must be filled",
         };
       }
-      console.log(req.file);
-      console.log(req.body);
 
       const fileBase64 = req.file.buffer.toString("base64");
       const file = `data:${req.file.mimetype};base64,${fileBase64}`;
@@ -132,7 +130,7 @@ module.exports = {
 
       const token = createToken({
         id: user.id,
-        email: user.email_courier,
+        email_courier: user.email_courier,
       });
 
       return res.status(200).json({
@@ -314,6 +312,7 @@ module.exports = {
     try{
       res.status(200).json({
         status: "success",
+        message: "Get current courier success",
         data: {
           courier: req.courier,
         },
@@ -323,6 +322,37 @@ module.exports = {
         name: err.name || "InternalServerError",
         message: err.message || "Internal Server Error",
       });
+    }
+  },
+  async getCourierById(req, res) {
+    try{
+      const id = req.params.id;
+      const courier = await Courier.findByPk(id);
+      if(!courier){
+        throw {
+          name: "badRequest",
+          message: "Courier not found",
+        };
+      }
+      res.status(200).json({
+        status: "success",
+        message: "Get courier by id success",
+        data: {
+          courier,
+        },
+      })
+    }catch(err){
+      if (err.name === "badRequest") {
+        return res.status(400).json({
+          name: err.name,
+          message: err.message,
+        });
+      } else {
+        return res.status(500).json({
+          name: err.name,
+          message: err.message,
+        });
+      }
     }
   }
 };
