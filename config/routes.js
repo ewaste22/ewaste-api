@@ -85,8 +85,8 @@ apiRouter.delete("/api/v1/pickup/:id", middlewares.authMiddleware.authAdmin, con
 apiRouter.get("/api/v1/pickup/courier/:id", controllers.api.v1.pickupController.findPickupByCourierId);
 
 // cart
-apiRouter.get("/api/v1/cart", controllers.api.v1.cartController.findAllCart);
-apiRouter.get("/api/v1/cart/:id", controllers.api.v1.cartController.findCartById);
+apiRouter.get("/api/v1/cart", middlewares.authMiddleware.authUser, controllers.api.v1.cartController.findAllCart);
+apiRouter.get("/api/v1/cart/:id", middlewares.authMiddleware.authUser, controllers.api.v1.cartController.findCartById);
 apiRouter.post("/api/v1/cart", middlewares.authMiddleware.authUser, validations.bodyValidation.createCartValidate, validations.checkValidate, controllers.api.v1.cartController.createCart);
 apiRouter.put("/api/v1/cart/:id", middlewares.authMiddleware.authUser, controllers.api.v1.cartController.updateCart);
 apiRouter.delete("/api/v1/cart/:id", middlewares.authMiddleware.authUser, controllers.api.v1.cartController.deleteCart);
