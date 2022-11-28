@@ -50,6 +50,10 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
+      address_pickup: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
     },
     {
       sequelize,

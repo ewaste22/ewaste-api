@@ -31,6 +31,7 @@ module.exports = (sequelize, DataTypes) => {
             msg: "Cart Id must be a number",
           },
         },
+      },
         status_transaction: {
           type: DataTypes.STRING,
           allowNull: false,
@@ -64,7 +65,11 @@ module.exports = (sequelize, DataTypes) => {
             },
           },
         },
-      },
+        totalWeight_transaction: {
+          type: DataTypes.INTEGER,
+          allowNull: true,
+          defaultValue: 0
+        },
     },
     {
       sequelize,

@@ -100,6 +100,13 @@ apiRouter.post("/api/v1/dropbox", validations.bodyValidation.createDropboxValida
 apiRouter.put("/api/v1/dropbox/:id", controllers.api.v1.dropboxController.updateDropbox);
 apiRouter.delete("/api/v1/dropbox/:id", controllers.api.v1.dropboxController.deleteDropbox);
 
+// transaction
+apiRouter.get("/api/v1/transaction", controllers.api.v1.transactionController.findAllTransaction);
+apiRouter.post("/api/v1/transaction", middlewares.authMiddleware.authUser, validations.bodyValidation.createTransactionValidate, validations.checkValidate, controllers.api.v1.transactionController.createTransaction);
+apiRouter.put("/api/v1/transaction/:id", middlewares.authMiddleware.authUser, controllers.api.v1.transactionController.updateTransaction);
+apiRouter.delete("/api/v1/transaction/:id", middlewares.authMiddleware.authUser, controllers.api.v1.transactionController.deleteTransaction);
+apiRouter.get("/api/v1/transaction/cart/:id", middlewares.authMiddleware.authUser, controllers.api.v1.transactionController.findTransactionByCartId);
+
 /**
  * TODO: Delete this, this is just a demonstration of
  *       error handler
