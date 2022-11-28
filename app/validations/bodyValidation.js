@@ -58,5 +58,11 @@ module.exports = {
   createDropboxValidate: [
     body("Name_dropbox").notEmpty().withMessage("Name is required"),
     body("Address_dropbox").notEmpty().withMessage("Address is required")
+  ],
+  createTransactionValidate: [
+    body("cart_id").notEmpty().withMessage("Cart id is required").isNumeric().withMessage("Cart id must be number"),
+    body("pickup_id").notEmpty().withMessage("Pickup id is required").isNumeric().withMessage("Pickup id must be number"),
+    body("totalPoint_transaction").notEmpty().withMessage("Total point is required").isNumeric().withMessage("Total point must be number"),
+    body("totalWeight_transaction").notEmpty().withMessage("Total weight is required").isNumeric().withMessage("Total weight must be number"),
   ]
 };

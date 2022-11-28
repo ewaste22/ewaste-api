@@ -17,6 +17,9 @@ module.exports = {
       courier_id: {
         type: Sequelize.INTEGER,
       },
+      address_pickup: {
+        type: Sequelize.STRING,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
