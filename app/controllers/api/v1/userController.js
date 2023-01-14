@@ -341,5 +341,23 @@ module.exports = {
         });
       }
     }
+  },
+  async getAllUser(req, res) {
+    try{
+      const users = await User.findAll();
+
+      res.status(200).json({
+        status: "success",
+        message: "Get all user success",
+        data: {
+          users,
+        },
+      })
+    }catch(err){
+      return res.status(500).json({
+        name: err.name,
+        message: err.message,
+      });
+    }
   }
 };

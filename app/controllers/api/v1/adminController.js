@@ -351,5 +351,22 @@ module.exports = {
         });
       }
     }
+  },
+  async getAllAdmin(req, res){
+    try{
+      const admin = await Administrator.findAll();
+      res.status(200).json({
+        status: "success",
+        message: "Get all admin success",
+        data: {
+          admin,
+        },
+      })
+    }catch(err){
+      return res.status(500).json({
+        name: err.name || "InternalServerError",
+        message: err.message || "Internal Server Error",
+      });
+    }
   }
 };
