@@ -354,5 +354,24 @@ module.exports = {
         });
       }
     }
+  },
+  async getAllCourier(req, res) {
+    try {
+      const courier = await Courier.findAll();
+      res.status(200).json({
+        status: "success",
+        message: "courier found successfully",
+        result: courier.length,
+        data: {
+          courier,
+        },
+      });
+    } catch (err) {
+      res.status(422).json({
+        status: "failed",
+        name: "Unprocessable Entity",
+        message: err.message || "Unprocessable Entity",
+      });
+    }
   }
 };

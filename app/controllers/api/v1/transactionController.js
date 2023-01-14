@@ -158,5 +158,31 @@ module.exports = {
                 message: err.message || "Unprocessable Entity",
             });
         }
+    },
+    async findTransactionById(req, res) {
+        try {
+            const transaction = await Transaction.findByPk(req.params.id);
+            if (!transaction) {
+                res.status(404).json({
+                    status: "failed",
+                    name: "Not Found",
+                    message: "Transaction not found",
+                });
+            } else {
+                res.status(200).json({
+                    status: "success",
+                    message: "Transaction found successfully",
+                    data: {
+                        transaction,
+                    },
+                });
+            }
+        } catch (err) {
+            res.status(422).json({
+                status: "failed",
+                name: "Unprocessable Entity",
+                message: err.message || "Unprocessable Entity",
+            });
+        }
     }
 }
