@@ -102,16 +102,20 @@ apiRouter.put("/api/v1/pickup/:id", middlewares.authMiddleware.authAdmin, contro
 apiRouter.delete("/api/v1/pickup/:id", middlewares.authMiddleware.authAdmin, controllers.api.v1.pickupController.deletePickup);
 
 // cart
-apiRouter.get("/api/v1/cart/:id", middlewares.authMiddleware.authUser, controllers.api.v1.cartController.findCartById);
-apiRouter.post("/api/v1/cart", middlewares.authMiddleware.authUser, validations.bodyValidation.createCartValidate, validations.checkValidate, controllers.api.v1.cartController.createCart);
-apiRouter.put("/api/v1/cart/:id", middlewares.authMiddleware.authUser, controllers.api.v1.cartController.updateCart);
-apiRouter.delete("/api/v1/cart/:id", middlewares.authMiddleware.authUser, controllers.api.v1.cartController.deleteCart);
+apiRouter.get("/api/v1/user/cart/:id", middlewares.authMiddleware.authUser, controllers.api.v1.cartController.findCartById);
+apiRouter.post("/api/v1/user/cart", middlewares.authMiddleware.authUser, validations.bodyValidation.createCartValidate, validations.checkValidate, controllers.api.v1.cartController.createCart);
+apiRouter.put("/api/v1/user/cart/:id", middlewares.authMiddleware.authUser, controllers.api.v1.cartController.updateCart);
+apiRouter.delete("/api/v1/user/cart/:id", middlewares.authMiddleware.authUser, controllers.api.v1.cartController.deleteCart);
 apiRouter.get("/api/v1/cart/user/:id", middlewares.authMiddleware.authUser, controllers.api.v1.cartController.findCartByUserId);
 apiRouter.get("/api/v1/cart/user/:id/pending", middlewares.authMiddleware.authUser, controllers.api.v1.cartController.findCartPendingByUserId);
 apiRouter.get("/api/v1/cart/user/:id/status", middlewares.authMiddleware.authUser,controllers.api.v1.cartController.findCartStatusByUserId);
 
 // cart-admin
-apiRouter.get("/api/v1/cart", middlewares.authMiddleware.authAdmin, controllers.api.v1.cartController.findAllCart);
+apiRouter.get("/api/v1/admin/cart", middlewares.authMiddleware.authAdmin, controllers.api.v1.cartController.findAllCart);
+apiRouter.post("/api/v1/admin/cart", middlewares.authMiddleware.authAdmin, validations.bodyValidation.createCartValidate, validations.checkValidate, controllers.api.v1.cartController.createCart);
+apiRouter.get("/api/v1/admin/cart/:id", middlewares.authMiddleware.authAdmin, controllers.api.v1.cartController.findCartById);
+apiRouter.put("/api/v1/admin/cart/:id", middlewares.authMiddleware.authAdmin, controllers.api.v1.cartController.updateCart);
+apiRouter.delete("/api/v1/admin/cart/:id", middlewares.authMiddleware.authAdmin, controllers.api.v1.cartController.deleteCart);
 
 // dropbox
 apiRouter.get("/api/v1/admin/dropbox", controllers.api.v1.dropboxController.findAllDropbox)

@@ -1066,10 +1066,10 @@
         }
       }
     },
-    "/api/v1/cart" : {
-      "patch" : {
-        "tags" : ["Cart"],
-        "summary" : "Find all cart",
+    "/user/cart" : {
+      "post" : {
+        "tags" : ["Cart User"],
+        "summary" : "Create cart",
         "security": [
           {
             "bearerAuth": []
@@ -1081,27 +1081,19 @@
               "schema" : {
                 "type" : "object",
                 "properties" : {
-                  "id_cart" : {
+                  "user_id" : {
                     "type" : "integer",
                     "example" : 1
                   },
-                  "id_user" : {
+                  "waste_id" : {
                     "type" : "integer",
                     "example" : 1
                   },
-                  "id_product" : {
+                  "total_waste" : {
                     "type" : "integer",
                     "example" : 1
                   },
-                  "quantity" : {
-                    "type" : "integer",
-                    "example" : 1
-                  },
-                  "total_price" : {
-                    "type" : "integer",
-                    "example" : 10000
-                  },
-                  "status" : {
+                  "status_cart" : {
                     "type" : "string",
                     "example" : "pending"
                   }
@@ -1109,10 +1101,569 @@
               }
             }
           }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Cart created successfully"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "cart": {
+                          "type": "string",
+                          "$ref": "#/components/schemas/Cart"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
         }
-
       }
-
+    },
+    "/user/cart/{id}": {
+      "get": {
+        "tags": ["Cart User"],
+        "summary": "Find cart by id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of cart to return",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Cart found successfully"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "cart": {
+                          "type": "string",
+                          "$ref": "#/components/schemas/Cart"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Cart User"],
+        "summary": "Update cart by id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of cart to return",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "user_id": {
+                    "type": "integer",
+                    "example": 1
+                  },
+                  "waste_id": {
+                    "type": "integer",
+                    "example": 1
+                  },
+                  "total_waste": {
+                    "type": "integer",
+                    "example": 1
+                  },
+                  "status_cart": {
+                    "type": "string",
+                    "example": "pending"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Cart updated successfully"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "cart": {
+                          "type": "string",
+                          "$ref": "#/components/schemas/Cart"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Cart User"],
+        "summary": "Delete cart by id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of cart to return",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Cart deleted successfully"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "cart": {
+                          "type": "string",
+                          "$ref": "#/components/schemas/Cart"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      }
+    },
+    "/cart/user/{id}": {
+      "get": {
+        "tags": ["Cart User"],
+        "summary": "Find cart by user id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of cart to return",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Cart found successfully"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "cart": {
+                          "type": "string",
+                          "$ref": "#/components/schemas/Cart"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      }
+    },
+    "/cart/user/{id}/pending": {
+      "get": {
+        "tags": ["Cart User"],
+        "summary": "Find cart by user id and status pending",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of cart to return",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Cart found successfully"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "cart": {
+                          "type": "string",
+                          "$ref": "#/components/schemas/Cart"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      }
+    },
+    "/cart/user/{id}/status": {
+      "get": {
+        "tags": ["Cart User"],
+        "summary": "Find cart by user id and status",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of cart to return",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "Status of cart to return",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Cart found successfully"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "cart": {
+                          "type": "string",
+                          "$ref": "#/components/schemas/Cart"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      }
+    },
+    "/admin/cart": {
+      "get": {
+        "tags" : ["Cart Admin"],
+        "summary" : "Find all cart",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Cart found successfully"
+                    },
+                    "result": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "cart": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Cart"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      },
+      "post": {
+        "tags" : ["Cart Admin"],
+        "summary" : "Create new cart",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "user_id": {
+                    "type": "integer",
+                    "example": 1
+                  },
+                  "waste_id": {
+                    "type": "integer",
+                    "example": 1
+                  },
+                  "total_waste": {
+                    "type": "integer",
+                    "example": 1
+                  },
+                  "status_cart": {
+                    "type": "string",
+                    "example": "pending"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Cart created successfully"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "cart": {
+                          "type": "string",
+                          "$ref": "#/components/schemas/Cart"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -1329,6 +1880,39 @@
           "image_courier": {
             "type": "string",
             "example": null
+          }
+        }
+      },
+      "Cart": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "user_id": {
+            "type": "integer",
+            "example": 1
+          },
+          "waste_id": {
+            "type": "integer",
+            "example": 1
+          },
+          "total_waste": {
+            "type": "integer",
+            "example": 1
+          },
+          "status_cart": {
+            "type": "string",
+            "example": "pending"
+          },
+          "updatedAt": {
+            "type": "string",
+            "example": "2022-10-05T00:12:24.795Z"
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2022-10-05T00:12:24.795Z"
           }
         }
       }

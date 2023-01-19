@@ -165,7 +165,7 @@ module.exports = {
             const cart = await Cart.findAll({
                 where: {
                     user_id: req.params.id,
-                    status_cart: req.body.status_cart
+                    status_cart: req.params.status
                 }
             })
             if (!cart) {
