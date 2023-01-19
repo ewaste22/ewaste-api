@@ -108,7 +108,7 @@ apiRouter.put("/api/v1/user/cart/:id", middlewares.authMiddleware.authUser, cont
 apiRouter.delete("/api/v1/user/cart/:id", middlewares.authMiddleware.authUser, controllers.api.v1.cartController.deleteCart);
 apiRouter.get("/api/v1/cart/user/:id", middlewares.authMiddleware.authUser, controllers.api.v1.cartController.findCartByUserId);
 apiRouter.get("/api/v1/cart/user/:id/pending", middlewares.authMiddleware.authUser, controllers.api.v1.cartController.findCartPendingByUserId);
-apiRouter.get("/api/v1/cart/user/:id/status", middlewares.authMiddleware.authUser,controllers.api.v1.cartController.findCartStatusByUserId);
+apiRouter.get("/api/v1/cart/user/:id/:status", middlewares.authMiddleware.authUser,controllers.api.v1.cartController.findCartStatusByUserId);
 
 // cart-admin
 apiRouter.get("/api/v1/admin/cart", middlewares.authMiddleware.authAdmin, controllers.api.v1.cartController.findAllCart);
