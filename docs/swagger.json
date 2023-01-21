@@ -1103,7 +1103,7 @@
           }
         },
         "responses": {
-          "200": {
+          "201": {
             "description": "Success",
             "content": {
               "application/json": {
@@ -1195,8 +1195,8 @@
               }
             }
           },
-          "400": {
-            "$ref": "#/components/responses/BadRequest"
+          "404": {
+            "$ref": "#/components/responses/NotFound"
           },
           "403": {
             "$ref": "#/components/responses/Forbidden"
@@ -1283,6 +1283,9 @@
               }
             }
           },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
           "403": {
             "$ref": "#/components/responses/Forbidden"
           },
@@ -1340,6 +1343,9 @@
                 }
               }
             }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
           },
           "403": {
             "$ref": "#/components/responses/Forbidden"
@@ -1401,6 +1407,9 @@
               }
             }
           },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
           "403": {
             "$ref": "#/components/responses/Forbidden"
           },
@@ -1460,6 +1469,9 @@
                 }
               }
             }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
           },
           "403": {
             "$ref": "#/components/responses/Forbidden"
@@ -1529,6 +1541,9 @@
                 }
               }
             }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
           },
           "403": {
             "$ref": "#/components/responses/Forbidden"
@@ -1628,7 +1643,7 @@
           }
         },
         "responses": {
-          "200": {
+          "201": {
             "description": "Success",
             "content": {
               "application/json": {
@@ -1720,6 +1735,9 @@
               }
             }
           },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
           "403": {
             "$ref": "#/components/responses/Forbidden"
           },
@@ -1805,6 +1823,9 @@
               }
             }
           },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
           "403": {
             "$ref": "#/components/responses/Forbidden"
           },
@@ -1862,6 +1883,9 @@
                 }
               }
             }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
           },
           "403": {
             "$ref": "#/components/responses/Forbidden"
@@ -1978,6 +2002,9 @@
               }
             }
           },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
           "403": {
             "$ref": "#/components/responses/Forbidden"
           },
@@ -2077,7 +2104,7 @@
           }
         },
         "responses": {
-          "200": {
+          "201": {
             "description": "Success",
             "content": {
               "application/json": {
@@ -2169,6 +2196,9 @@
               }
             }
           },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
           "403": {
             "$ref": "#/components/responses/Forbidden"
           },
@@ -2254,6 +2284,9 @@
               }
             }
           },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
           "403": {
             "$ref": "#/components/responses/Forbidden"
           },
@@ -2311,6 +2344,446 @@
                 }
               }
             }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      }
+    },
+    "/categoryWaste": {
+      "get": {
+        "tags" : ["Category Waste"],
+        "summary" : "Get all category waste",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Category waste found successfully"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "categoryWaste": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "$ref": "#/components/schemas/CategoryWaste"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      }
+    },
+    "/categoryWaste/{id}": {
+      "get": {
+        "tags" : ["Category Waste"],
+        "summary" : "Get category waste by id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of category waste to return",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Category waste found successfully"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "categoryWaste": {
+                          "type": "string",
+                          "$ref": "#/components/schemas/CategoryWaste"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      }
+    },
+    "/admin/categoryWaste": {
+      "post": {
+        "tags" : ["Category Waste Admin"],
+        "summary" : "Create category waste",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name_category": {
+                    "type": "string",
+                    "example": "Plastik"
+                  },
+                  "typeOf_weight": {
+                    "type": "string",
+                    "example": "Heavy"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Category waste created successfully"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "categoryWaste": {
+                          "type": "string",
+                          "$ref": "#/components/schemas/CategoryWaste"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400":{
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      },
+      "get": {
+        "tags" : ["Category Waste Admin"],
+        "summary" : "Get all category waste",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Category waste found successfully"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "categoryWaste": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "$ref": "#/components/schemas/CategoryWaste"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      }
+    },
+    "/admin/categoryWaste/{id}": {
+      "get": {
+        "tags" : ["Category Waste Admin"],
+        "summary" : "Get category waste by id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of category waste to return",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Category waste found successfully"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "categoryWaste": {
+                          "type": "string",
+                          "$ref": "#/components/schemas/CategoryWaste"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      },
+      "put": {
+        "tags" : ["Category Waste Admin"],
+        "summary" : "Update category waste by id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of category waste to return",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name_category": {
+                    "type": "string",
+                    "example": "Plastik"
+                  },
+                  "typeOf_weight": {
+                    "type": "string",
+                    "example": "Heavy"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Category waste updated successfully"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "categoryWaste": {
+                          "type": "string",
+                          "$ref": "#/components/schemas/CategoryWaste"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      },
+      "delete": {
+        "tags" : ["Category Waste Admin"],
+        "summary" : "Delete category waste by id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of category waste to return",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Category waste deleted successfully"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "categoryWaste": {
+                          "type": "string",
+                          "$ref": "#/components/schemas/CategoryWaste"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
           },
           "403": {
             "$ref": "#/components/responses/Forbidden"
@@ -2604,6 +3077,31 @@
             "example": "2022-10-05T00:12:24.795Z"
           }
         }
+      },
+      "CategoryWaste": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "name_category": {
+            "type": "string",
+            "example": "Kertas"
+          },
+          "typeOf_weight": {
+            "type": "string",
+            "example": "Heavy"
+          },
+          "updatedAt": {
+            "type": "string",
+            "example": "2022-10-05T00:12:24.795Z"
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2022-10-05T00:12:24.795Z"
+          }
+        }
       }
     },
     "responses": {
@@ -2674,6 +3172,10 @@
             "schema": {
               "type": "object",
               "properties": {
+                "status":{
+                  "type": "string",
+                  "example": "failed"
+                },
                 "name": {
                   "type": "string"
                 },
