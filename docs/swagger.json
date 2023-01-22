@@ -3262,6 +3262,345 @@
           }
         }
       }
+    },
+    "/admin/dropbox": {
+      "get": {
+        "tags" : ["Dropbox Admin"],
+        "summary" : "Get all dropbox",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Dropbox found successfully"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "dropbox": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "$ref": "#/components/schemas/Dropbox"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      },
+      "post": {
+        "tags" : ["Dropbox Admin"],
+        "summary" : "Create dropbox",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "Name_dropbox": {
+                    "type": "string",
+                    "example": "Dropbox 1"
+                  },
+                  "Address_dropbox": {
+                    "type": "string",
+                    "example": "Jl. Raya"
+                  },
+                  "Lat_dropbox": {
+                    "type": "string",
+                    "example": "-6.123456"
+                  },
+                  "Long_dropbox": {
+                    "type": "string",
+                    "example": "106.123456"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Dropbox created successfully"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "dropbox": {
+                          "type": "string",
+                          "$ref": "#/components/schemas/Dropbox"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      }
+    },
+    "/admin/dropbox/{id}":{
+      "get": {
+        "tags" : ["Dropbox Admin"],
+        "summary" : "Get dropbox by id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of dropbox to return",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Dropbox found successfully"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "dropbox": {
+                          "type": "string",
+                          "$ref": "#/components/schemas/Dropbox"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      },
+      "put": {
+        "tags" : ["Dropbox Admin"],
+        "summary" : "Update dropbox by id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of dropbox to return",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "Name_dropbox": {
+                    "type": "string",
+                    "example": "Dropbox 1"
+                  },
+                  "Address_dropbox": {
+                    "type": "string",
+                    "example": "Jl. Raya"
+                  },
+                  "Lat_dropbox": {
+                    "type": "string",
+                    "example": "-6.123456"
+                  },
+                  "Long_dropbox": {
+                    "type": "string",
+                    "example": "106.123456"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Dropbox updated successfully"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "dropbox": {
+                          "type": "string",
+                          "$ref": "#/components/schemas/Dropbox"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      },
+      "delete": {
+        "tags" : ["Dropbox Admin"],
+        "summary" : "Delete dropbox by id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of dropbox to return",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Dropbox deleted successfully"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "dropbox": {
+                          "type": "string",
+                          "$ref": "#/components/schemas/Dropbox"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -3602,6 +3941,39 @@
           "weight_waste": {
             "type": "integer",
             "example": 1
+          },
+          "updatedAt": {
+            "type": "string",
+            "example": "2022-10-05T00:12:24.795Z"
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2022-10-05T00:12:24.795Z"
+          }
+        }
+      },
+      "Dropbox":{
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "Name_dropbox": {
+            "type": "string",
+            "example": "Dropbox 1"
+          },
+          "Address_dropbox": {
+            "type": "string",
+            "example": "Jl. Raya Cibubur No. 1"
+          },
+          "Lat_dropbox": {
+            "type": "string",
+            "example": "-6.123456"
+          },
+          "Long_dropbox": {
+            "type": "string",
+            "example": "106.123456"
           },
           "updatedAt": {
             "type": "string",

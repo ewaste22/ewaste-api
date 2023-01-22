@@ -118,10 +118,10 @@ apiRouter.put("/api/v1/admin/cart/:id", middlewares.authMiddleware.authAdmin, co
 apiRouter.delete("/api/v1/admin/cart/:id", middlewares.authMiddleware.authAdmin, controllers.api.v1.cartController.deleteCart);
 
 // dropbox
-apiRouter.get("/api/v1/admin/dropbox", controllers.api.v1.dropboxController.findAllDropbox)
-apiRouter.post("/api/v1/admin/dropbox", controllers.api.v1.dropboxController.createDropbox);
-apiRouter.put("/api/v1/admin/dropbox/:id", controllers.api.v1.dropboxController.updateDropbox);
-apiRouter.delete("/api/v1/admin/dropbox/:id", controllers.api.v1.dropboxController.deleteDropbox);
+apiRouter.get("/api/v1/admin/dropbox", middlewares.authMiddleware.authAdmin, controllers.api.v1.dropboxController.findAllDropbox)
+apiRouter.post("/api/v1/admin/dropbox", middlewares.authMiddleware.authAdmin, controllers.api.v1.dropboxController.createDropbox);
+apiRouter.put("/api/v1/admin/dropbox/:id", middlewares.authMiddleware.authAdmin, controllers.api.v1.dropboxController.updateDropbox);
+apiRouter.delete("/api/v1/admin/dropbox/:id", middlewares.authMiddleware.authAdmin, controllers.api.v1.dropboxController.deleteDropbox);
 
 // transaction
 apiRouter.post("/api/v1/transaction", middlewares.authMiddleware.authUser, validations.bodyValidation.createTransactionValidate, validations.checkValidate, controllers.api.v1.transactionController.createTransaction);
