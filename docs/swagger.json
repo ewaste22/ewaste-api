@@ -3601,6 +3601,418 @@
           }
         }
       }
+    },
+    "/transaction": {
+      "post": {
+        "tags" : ["Transaction User"],
+        "summary" : "Create transaction",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "cart_id": {
+                    "type": "integer",
+                    "example": 1
+                  },
+                  "status_transaction": {
+                    "type": "string",
+                    "example": "pending"
+                  },
+                  "totalPoint_transaction": {
+                    "type": "integer",
+                    "example": 100
+                  },
+                  "pickup_id": {
+                    "type": "integer",
+                    "example": 1
+                  },
+                  "totalWeight_transaction": {
+                    "type": "integer",
+                    "example": 100
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Transaction created successfully"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "transaction": {
+                          "type": "string",
+                          "$ref": "#/components/schemas/Transaction"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      }
+    },
+    "/transaction/{id}": {
+      "get": {
+        "tags" : ["Transaction User"],
+        "summary" : "Get transaction by id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of transaction to return",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Transaction found"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "transaction": {
+                          "type": "string",
+                          "$ref": "#/components/schemas/Transaction"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      },
+      "put": {
+        "tags" : ["Transaction User"],
+        "summary" : "Update transaction by id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of transaction to return",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "cart_id": {
+                    "type": "integer",
+                    "example": 1
+                  },
+                  "status_transaction": {
+                    "type": "string",
+                    "example": "pending"
+                  },
+                  "totalPoint_transaction": {
+                    "type": "integer",
+                    "example": 100
+                  },
+                  "pickup_id": {
+                    "type": "integer",
+                    "example": 1
+                  },
+                  "totalWeight_transaction": {
+                    "type": "integer",
+                    "example": 100
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Transaction updated successfully"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "transaction": {
+                          "type": "string",
+                          "$ref": "#/components/schemas/Transaction"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      },
+      "delete": {
+        "tags" : ["Transaction User"],
+        "summary" : "Delete transaction by id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of transaction to return",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Transaction deleted successfully"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "transaction": {
+                          "type": "string",
+                          "$ref": "#/components/schemas/Transaction"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      }
+    },
+    "/transaction/cart/{id}": {
+      "get": {
+        "tags" : ["Transaction User"],
+        "summary" : "Get transaction by cart id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "cart_id",
+            "in": "path",
+            "description": "Cart id of cart to return",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Transaction found"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "transaction": {
+                          "type": "string",
+                          "$ref": "#/components/schemas/Transaction"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      }
+    },
+    "/admin/transaction": {
+      "get": {
+        "tags" : ["Transaction Admin"],
+        "summary" : "Get all transaction",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Transaction found"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "transaction": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "$ref": "#/components/schemas/Transaction"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -3974,6 +4386,39 @@
           "Long_dropbox": {
             "type": "string",
             "example": "106.123456"
+          },
+          "updatedAt": {
+            "type": "string",
+            "example": "2022-10-05T00:12:24.795Z"
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2022-10-05T00:12:24.795Z"
+          }
+        }
+      },
+      "Transaction": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "cart_id": {
+            "type": "integer",
+            "example": 1
+          },
+          "totalPoint_transaction": {
+            "type": "integer",
+            "example": 1
+          },
+          "pickup_id": {
+            "type": "integer",
+            "example": 1
+          },
+          "totalWeight_transaction": {
+            "type": "integer",
+            "example": 1
           },
           "updatedAt": {
             "type": "string",
