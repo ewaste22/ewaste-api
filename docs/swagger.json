@@ -4013,6 +4013,512 @@
           }
         }
       }
+    },
+    "/admin/pickup": {
+      "get": {
+        "tags" : ["Pickup Admin"],
+        "summary" : "Get all pickup",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Pickup found"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "pickup": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "$ref": "#/components/schemas/Pickup"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      },
+      "post": {
+        "tags" : ["Pickup Admin"],
+        "summary" : "Create pickup",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status_pickup": {
+                    "type": "string",
+                    "example": "Pending"
+                  },
+                  "type_pickup": {
+                    "type": "string",
+                    "example": "Pickup"
+                  },
+                  "courier_id": {
+                    "type": "integer",
+                    "example": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Pickup created"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "pickup": {
+                          "type": "string",
+                          "$ref": "#/components/schemas/Pickup"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      }
+    },
+    "/admin/pickup/{id}": {
+      "get": {
+        "tags" : ["Pickup Admin"],
+        "summary" : "Get pickup by id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Pickup id",
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Pickup found"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "pickup": {
+                          "type": "string",
+                          "$ref": "#/components/schemas/Pickup"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      },
+      "put": {
+        "tags" : ["Pickup Admin"],
+        "summary" : "Update pickup by id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Pickup id",
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status_pickup": {
+                    "type": "string",
+                    "example": "Pending"
+                  },
+                  "type_pickup": {
+                    "type": "string",
+                    "example": "Pickup"
+                  },
+                  "courier_id": {
+                    "type": "integer",
+                    "example": 1
+                  }
+                }
+              }
+            }
+          }
+        },  
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Pickup updated"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "pickup": {
+                          "type": "string",
+                          "$ref": "#/components/schemas/Pickup"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      },
+      "delete": {
+        "tags" : ["Pickup Admin"],
+        "summary" : "Delete pickup by id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Pickup id",
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Pickup deleted"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "pickup": {
+                          "type": "string",
+                          "$ref": "#/components/schemas/Pickup"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      }
+    },
+    "/courier/pickup": {
+      "get": {
+        "tags" : ["Pickup Courier"],
+        "summary" : "Get all pickup",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Pickup found"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "pickup": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "$ref": "#/components/schemas/Pickup"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      }
+    },
+    "/courier/pickup/courier/{id}": {
+      "get": {
+        "tags" : ["Pickup Courier"],
+        "summary" : "Get pickup by courier id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Courier id",
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Pickup found"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "pickup": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "$ref": "#/components/schemas/Pickup"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      }
+    },
+    "/pickup/{id}": {
+      "get": {
+        "tags" : ["Pickup User"],
+        "summary" : "Get pickup by id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Pickup id",
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Pickup found"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "pickup": {
+                          "type": "string",
+                          "$ref": "#/components/schemas/Pickup"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "description": "Internal Service Error"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -4417,6 +4923,35 @@
             "example": 1
           },
           "totalWeight_transaction": {
+            "type": "integer",
+            "example": 1
+          },
+          "updatedAt": {
+            "type": "string",
+            "example": "2022-10-05T00:12:24.795Z"
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2022-10-05T00:12:24.795Z"
+          }
+        }
+      },
+      "Pickup": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "status_pickup": {
+            "type": "string",
+            "example": "Pending"
+          },
+          "type_pickup": {
+            "type": "string",
+            "example": "Pickup"
+          },
+          "courier_id": {
             "type": "integer",
             "example": 1
           },

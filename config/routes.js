@@ -92,14 +92,15 @@ apiRouter.put("/api/v1/admin/waste/:id", middlewares.authMiddleware.authAdmin, u
 apiRouter.delete("/api/v1/admin/waste/:id", middlewares.authMiddleware.authAdmin, controllers.api.v1.wasteController.deleteWaste);
 
 // pickup
-apiRouter.get("/api/v1/pickup", middlewares.authMiddleware.authCourier, controllers.api.v1.pickupController.findAllPickup);
+apiRouter.get("/api/v1/courier/pickup", middlewares.authMiddleware.authCourier, controllers.api.v1.pickupController.findAllPickup);
 apiRouter.get("/api/v1/pickup/:id", middlewares.authMiddleware.authUser, controllers.api.v1.pickupController.findPickupById);
-apiRouter.get("/api/v1/pickup/courier/:id", controllers.api.v1.pickupController.findPickupByCourierId);
+apiRouter.get("/api/v1/courier/pickup/courier/:id", controllers.api.v1.pickupController.findPickupByCourierId);
 // pickup admin
 apiRouter.get("/api/v1/admin/pickup", middlewares.authMiddleware.authAdmin, controllers.api.v1.pickupController.findAllPickup);
-apiRouter.post("/api/v1/pickup", middlewares.authMiddleware.authAdmin, validations.bodyValidation.createPickupValidate, validations.checkValidate,controllers.api.v1.pickupController.createPickup);
-apiRouter.put("/api/v1/pickup/:id", middlewares.authMiddleware.authAdmin, controllers.api.v1.pickupController.updatePickup);
-apiRouter.delete("/api/v1/pickup/:id", middlewares.authMiddleware.authAdmin, controllers.api.v1.pickupController.deletePickup);
+apiRouter.post("/api/v1/admin/pickup", middlewares.authMiddleware.authAdmin, validations.bodyValidation.createPickupValidate, validations.checkValidate,controllers.api.v1.pickupController.createPickup);
+apiRouter.put("/api/v1/admin/pickup/:id", middlewares.authMiddleware.authAdmin, controllers.api.v1.pickupController.updatePickup);
+apiRouter.delete("/api/v1/admin/pickup/:id", middlewares.authMiddleware.authAdmin, controllers.api.v1.pickupController.deletePickup);
+apiRouter.get("/api/v1/admin/pickup/:id", middlewares.authMiddleware.authAdmin, controllers.api.v1.pickupController.findPickupById);
 
 // cart
 apiRouter.get("/api/v1/user/cart/:id", middlewares.authMiddleware.authUser, controllers.api.v1.cartController.findCartById);
