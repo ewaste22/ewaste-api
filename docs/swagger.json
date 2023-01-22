@@ -10,6 +10,9 @@
       "url": "http://localhost:8000/api/v1/"
     },
     {
+      "url": "https://e-waste.madz-n-cya.com/api/v1/"
+    },
+    {
       "url": "https://ewaste-api.herokuapp.com/api/v1/"
     }
   ],
