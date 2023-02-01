@@ -36,6 +36,12 @@ module.exports = {
         where: {
           id,
         },
+        include: [
+          {
+            model: Category_waste,
+            attributes: ["id", "name_category"],
+          },
+        ],
       });
       if (!waste) {
         res.status(404).json({
