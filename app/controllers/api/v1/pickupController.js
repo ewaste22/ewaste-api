@@ -3,7 +3,12 @@ const { Pickup, Courier } = require("../../../models")
 module.exports = {
     async findAllPickup(req, res) {
         try {
-            const pickup = await Pickup.findAll()
+            const pickup = await Pickup.findAll({
+                include: [{
+                    model: Courier,
+                    attributes: ["id", "fullname_courier"]
+                }]
+            })
             res.status(200).json({
                 status: "success",
                 message: "Pickup found successfully",
@@ -22,7 +27,12 @@ module.exports = {
     },
     async findPickupById(req, res) {
         try {
-            const pickup = await Pickup.findByPk(req.params.id)
+            const pickup = await Pickup.findByPk(req.params.id, {
+                include: [{
+                    model: Courier,
+                    attributes: ["id", "fullname_courier"]
+                }]
+            })
             if (!pickup) {
                 res.status(404).json({
                     status: "failed",
