@@ -1,10 +1,18 @@
 const { Waste } = require("../../../models");
+const { Category_waste } = require("../../../models");
 const cloudinary = require("../../../utils/cloudinary");
 
 module.exports = {
   async findAllWaste(req, res) {
     try {
-      const wastes = await Waste.findAll();
+      const wastes = await Waste.findAll({
+        include: [
+          {
+            model: Category_waste,
+            attributes: ["id", "name_category"],
+          },
+        ],
+      });
       res.status(200).json({
         status: "success",
         message: "Wastes found successfully",
