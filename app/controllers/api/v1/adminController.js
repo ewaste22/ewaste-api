@@ -368,5 +368,38 @@ module.exports = {
         message: err.message || "Internal Server Error",
       });
     }
+  },
+  async deleteAdmin(req, res) {
+    try {
+      const id = req.params.id;
+      const admin = await Administrator.findByPk(id);
+      if (!admin) {
+        throw {
+          name: "badRequest",
+          message: "admin not found",
+        };
+      }
+      await Administrator.destroy({
+        where: {
+          id,
+        },
+      });
+      res.status(200).json({
+        status: "success",
+        message: "Delete admin success",
+      });
+    } catch (err) {
+      if (err.name === "badRequest") {
+        return res.status(400).json({
+          name: err.name,
+          message: err.message,
+        });
+      } else {
+        return res.status(500).json({
+          name: err.name,
+          message: err.message,
+        });
+      }
+    }
   }
 };

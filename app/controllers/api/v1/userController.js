@@ -359,5 +359,38 @@ module.exports = {
         message: err.message,
       });
     }
+  },
+  async deleteUser(req, res) {
+    try {
+      const id = req.params.id;
+      const user = await User.findByPk(id);
+      if (!user) {
+        throw {
+          name: "badRequest",
+          message: "user not found",
+        };
+      }
+      await User.destroy({
+        where: {
+          id,
+        },
+      });
+      res.status(200).json({
+        status: "success",
+        message: "Delete user success",
+      });
+    } catch (err) {
+      if (err.name === "badRequest") {
+        return res.status(400).json({
+          name: err.name,
+          message: err.message,
+        });
+      } else {
+        return res.status(500).json({
+          name: err.name,
+          message: err.message,
+        });
+      }
+    }
   }
 };

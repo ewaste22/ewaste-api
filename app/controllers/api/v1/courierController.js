@@ -373,5 +373,38 @@ module.exports = {
         message: err.message || "Unprocessable Entity",
       });
     }
+  },
+  async deleteCourier(req, res) {
+    try {
+      const id = req.params.id;
+      const courier = await Courier.findByPk(id);
+      if (!courier) {
+        throw {
+          name: "badRequest",
+          message: "Courier not found",
+        };
+      }
+      await Courier.destroy({
+        where: {
+          id,
+        },
+      });
+      res.status(200).json({
+        status: "success",
+        message: "Delete courier success",
+      });
+    } catch (err) {
+      if (err.name === "badRequest") {
+        return res.status(400).json({
+          name: err.name,
+          message: err.message,
+        });
+      } else {
+        return res.status(500).json({
+          name: err.name,
+          message: err.message,
+        });
+      }
+    }
   }
 };
