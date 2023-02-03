@@ -50,16 +50,19 @@ apiRouter.post("/api/v1/auth/courier/login", controllers.api.v1.courierControlle
 apiRouter.patch("/api/v1/auth/courier/update/:id", uploadOnMemory.single("image_courier"), controllers.api.v1.courierController.update);
 apiRouter.patch("/api/v1/auth/courier/change-password/:id", controllers.api.v1.courierController.changePassword);
 
-// manage courier untuk admin
+// manage all-user untuk admin dashboard
 apiRouter.get("/api/v1/admin/courier", middlewares.authMiddleware.authAdmin, controllers.api.v1.courierController.getAllCourier);
 apiRouter.post("/api/v1/admin/courier/register", middlewares.authMiddleware.authAdmin, uploadOnMemory.single("image_courier"), controllers.api.v1.courierController.register);
 apiRouter.patch("/api/v1/admin/courier/update/:id", middlewares.authMiddleware.authAdmin, uploadOnMemory.single("image_courier"), controllers.api.v1.courierController.update);
+apiRouter.delete("/api/v1/admin/courier/delete/:id", middlewares.authMiddleware.authAdmin, controllers.api.v1.courierController.deleteCourier);
 apiRouter.get("/api/v1/admin/admin/",middlewares.authMiddleware.authAdmin, controllers.api.v1.adminController.getAllAdmin);
 apiRouter.post("/api/v1/admin/admin/register",middlewares.authMiddleware.authAdmin, uploadOnMemory.single("image_admin"), controllers.api.v1.adminController.register);
 apiRouter.put("/api/v1/admin/admin/update/:id", middlewares.authMiddleware.authAdmin, uploadOnMemory.single("image_admin"), controllers.api.v1.adminController.update);
+apiRouter.delete("/api/v1/admin/admin/delete/:id", middlewares.authMiddleware.authAdmin, controllers.api.v1.adminController.deleteAdmin);
 apiRouter.get("/api/v1/admin/user/",middlewares.authMiddleware.authAdmin, uploadOnMemory.single("image_admin"), controllers.api.v1.userController.getAllUser);
 apiRouter.post("/api/v1/admin/user/register",middlewares.authMiddleware.authAdmin, uploadOnMemory.single("image_admin"), controllers.api.v1.userController.register);
 apiRouter.put("/api/v1/admin/user/update/:id", middlewares.authMiddleware.authAdmin, uploadOnMemory.single("image_user"), controllers.api.v1.userController.update);
+apiRouter.delete("/api/v1/admin/user/delete/:id", middlewares.authMiddleware.authAdmin, controllers.api.v1.userController.deleteUser)
 
 // news
 apiRouter.get("/api/v1/news", middlewares.authMiddleware.authUser, controllers.api.v1.newsController.findAllNews);
