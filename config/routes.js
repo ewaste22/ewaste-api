@@ -59,8 +59,8 @@ apiRouter.get("/api/v1/admin/admin/",middlewares.authMiddleware.authAdmin, contr
 apiRouter.post("/api/v1/admin/admin/register",middlewares.authMiddleware.authAdmin, uploadOnMemory.single("image_admin"), controllers.api.v1.adminController.register);
 apiRouter.put("/api/v1/admin/admin/update/:id", middlewares.authMiddleware.authAdmin, uploadOnMemory.single("image_admin"), controllers.api.v1.adminController.update);
 apiRouter.delete("/api/v1/admin/admin/delete/:id", middlewares.authMiddleware.authAdmin, controllers.api.v1.adminController.deleteAdmin);
-apiRouter.get("/api/v1/admin/user/",middlewares.authMiddleware.authAdmin, uploadOnMemory.single("image_admin"), controllers.api.v1.userController.getAllUser);
-apiRouter.post("/api/v1/admin/user/register",middlewares.authMiddleware.authAdmin, uploadOnMemory.single("image_admin"), controllers.api.v1.userController.register);
+apiRouter.get("/api/v1/admin/user/",middlewares.authMiddleware.authAdmin, uploadOnMemory.single("image_user"), controllers.api.v1.userController.getAllUser);
+apiRouter.post("/api/v1/admin/user/register",middlewares.authMiddleware.authAdmin, uploadOnMemory.single("image_user"), controllers.api.v1.userController.register);
 apiRouter.put("/api/v1/admin/user/update/:id", middlewares.authMiddleware.authAdmin, uploadOnMemory.single("image_user"), controllers.api.v1.userController.update);
 apiRouter.delete("/api/v1/admin/user/delete/:id", middlewares.authMiddleware.authAdmin, controllers.api.v1.userController.deleteUser)
 
