@@ -2091,6 +2091,7 @@
                   },
                   "image_news": {
                     "type": "string",
+                    "format": "binary",
                     "example": "Image News"
                   },
                   "body_news": {
@@ -2242,6 +2243,7 @@
                   },
                   "image_news": {
                     "type": "string",
+                    "format": "binary",
                     "example": "Image News"
                   },
                   "body_news": {
@@ -2993,6 +2995,7 @@
                   },
                   "image_waste": {
                     "type": "string",
+                    "format": "binary",
                     "example": "image.jpg"
                   },
                   "weight_waste": {
@@ -3152,6 +3155,7 @@
                   },
                   "image_waste": {
                     "type": "string",
+                    "format": "binary",
                     "example": "image.jpg"
                   },
                   "weight_waste": {
