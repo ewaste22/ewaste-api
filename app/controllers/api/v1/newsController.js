@@ -1,10 +1,17 @@
-const { News } = require("../../../models");
+const { News, Administrator } = require("../../../models");
 const cloudinary = require("../../../utils/cloudinary");
 
 module.exports = {
   async findAllNews(req, res) {
     try {
-      const news = await News.findAll();
+      const news = await News.findAll({
+        include: [
+          {
+            model: Administrator,
+            attributes: ["id", "fullname_admin"],
+          }
+        ],
+      });
       res.status(200).json({
         status: "success",
         message: "News found successfully",
@@ -23,7 +30,14 @@ module.exports = {
   },
   async findNewsById(req, res) {
     try {
-      const news = await News.findByPk(req.params.id);
+      const news = await News.findByPk(req.params.id, {
+        include: [
+          {
+            model: Administrator,
+            attributes: ["id", "fullname_admin"],
+          }
+        ],
+      });
       if (!news) {
         res.status(404).json({
           status: "failed",
