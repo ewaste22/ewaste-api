@@ -1,6 +1,8 @@
 # MVC Boilerplate
 
-#### Author: Aldi Ageng Tri Seftian
+#### Author: 
+- Aldi Ageng Tri Seftian
+- Daffa Akhdan Fadhillah
 
 ## Getting Started
 
